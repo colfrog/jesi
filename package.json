@@ -1,0 +1,10 @@
+{
+  "name": "jesi",
+  "version": "0.0.1",
+  "description": "xi's node.js IRC bot",
+  "main": "src/entry.js",
+  "repository": "git@github.com:colfrog/jesi",
+  "author": "Laurent Cimon <laurent@nilio.ca>",
+  "license": "Proprietary",
+  "private": true
+}
