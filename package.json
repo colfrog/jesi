@@ -5,6 +5,6 @@
   "main": "src/entry.js",
   "repository": "git@github.com:colfrog/jesi",
   "author": "Laurent Cimon <laurent@nilio.ca>",
-  "license": "Proprietary",
+  "license": "BSD-2-Clause",
   "private": true
 }
