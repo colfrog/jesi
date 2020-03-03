@@ -15,7 +15,7 @@ export default class IRC {
 
 	removeServer(name) {
 		this.servers[name].close();
-		this.servers[name] = null;
+		delete this.servers[name];
 	}
 
 	on(command, callback) {
