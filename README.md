@@ -1,6 +1,6 @@
 # jesi
 
-## xi's node.js IRC bot
+## xi's node.js IRC client
 
 ### Run
 
