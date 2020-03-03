@@ -17,4 +17,11 @@ export default class IRC {
 		this.servers[name].close();
 		this.servers[name] = null;
 	}
+
+	on(command, callback) {
+		// TODO: Add hook to even future servers
+		this.servers.keys().forEach((name) => {
+			this.servers[name].on(command, callback);
+		});
+	}
 }

@@ -1,7 +1,7 @@
 // TODO: Eventually move to the extension subsystem
 export default function coreHooks() {}
 
-function register(server) {
+async function register(server) {
 	const pass = server.user.pass;
 	const realname = server.user.realname;
 	const ident = server.user.ident;
@@ -12,7 +12,7 @@ function register(server) {
 		server.write('PASS :' + pass);
 
 	// TODO: Make a wrapper for commands
-	server.write('NICK ' + nick);
+	server.write('NICK :' + nick);
 	server.write('USER ' + ident + ' * * :' + realname);
 }
 
@@ -32,7 +32,7 @@ async function joinChannels(server) {
 
 async function ping(server, msgData) {
 	// TODO: Make a wrapper for commands
-	server.write('PONG ' + msgData.params[0]);
+	server.write('PONG :' + msgData.params[0]);
 }
 
 // TODO: Find a good IRC command to respond to to execute the post-init hooks

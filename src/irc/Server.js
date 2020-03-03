@@ -13,6 +13,10 @@ export default class Server {
 		this._socket = this._makeSocket();
 	}
 
+	on(command, callback) {
+		hooks.add(command, callback);
+	}
+
 	close() {
 		this.hooks.runClosingHooks(this);
 		this._socket.destroy();
