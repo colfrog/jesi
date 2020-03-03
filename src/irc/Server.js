@@ -2,24 +2,24 @@ import net from 'net';
 import tls from 'tls';
 import regeneratorRuntime from 'regenerator-runtime';
 
-export default class server {
-	constructor(server_name, host_name, port, tls) {
-		this.name = server_name;
-		this.host = host_name;
+export default class Server {
+	constructor(serverName, hostName, port, TLS) {
+		this.name = serverName;
+		this.host = hostName;
 		this.port = port;
-		this.tls = this.is_tls(port, tls);
-		this.socket = this.make_socket();
+		this.TLS = this.isTLS(port, tls);
+		this.socket = this.makeSocket();
 	}
 
-	async on_socket_data(data) {
+	async onSocketData(data) {
 		console.log(this.name + ' (' + data.length + ' bytes): ' + data.trim());
 	}
 
-	async on_dead_socket() {
-		this.socket = this.make_socket();
+	async onDeadSocket() {
+		this.socket = this.makeSocket();
 	}
 
-	make_socket() {
+	makeSocket() {
 		console.log("Connection to server " + this.name + " on " + this.host + ":" + this.port);
 		var socket = net.connect({
 			host: this.host,
@@ -35,20 +35,20 @@ export default class server {
 		}
 
 		socket.setEncoding('utf8');
-		socket.on('data', this.on_socket_data.bind(this));
-		socket.on('end', this.on_dead_socket.bind(this));
+		socket.on('data', this.onSocketData.bind(this));
+		socket.on('end', this.onDeadSocket.bind(this));
 
 		return socket;
 	}
 
-	is_tls(port, tls) {
-		if (tls === true || tls === false)
-			return tls;
+	isTLS(port, TLS) {
+		if (TLS === true || TLS === false)
+			return TLS;
 
-		return this.is_tls_port(port);
+		return this.isPortTLS(port);
 	}
 
-	is_tls_port(port) {
+	isPortTLS(port) {
 		/*
 		 * Common non-SSL IRC ports
 		 * yes 7000 is ambiguous, an unencrypted connection will

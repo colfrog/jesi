@@ -1,4 +1,4 @@
-import irc from './irc/irc';
+import IRC from './irc/IRC';
 
-var client = new irc();
-client.add_server('Snoonet', 'irc.snoonet.org', 6697, true);
+var client = new IRC();
+client.addServer('Snoonet', 'irc.snoonet.org', 6697, true);
