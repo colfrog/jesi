@@ -21,17 +21,20 @@ export default class Server {
 	async write(data) {
 		var sanitized = this._sanitize(data);
 		for (let i = 0; i < sanitized.length; i++) {
-			let chunk = sanitized[i];
+			let chunk = sanitized[i] + '\r\n';
 			this._socket.write(chunk, this.info.encoding, () => {
-				console.log(this.info.name + ' <- ' + data.trim() + '\r\n');
+				console.log(this.info.name + ' <- ' + chunk.trim());
 			});
 		}
 	}
 
 	async _onSocketData(data) {
-		console.log(this.info.name + ' -> ' + data.trim());
-		const msgData = new MessageData(data);
-		this.hooks.runHooks(this, msgData);
+		var chunks = this._sanitize(data);
+		chunks.forEach((chunk) => {
+			console.log(this.info.name + ' -> ' + chunk);
+			const msgData = new MessageData(data);
+			this.hooks.runHooks(this, msgData);
+		});
 	}
 
 	async _onSocketConnected() {
@@ -92,12 +95,11 @@ export default class Server {
 	}
 
 	/*
-	 * TODO: _sanitize will eventually separate data in a list of IRC-writable
-	 * chunks and return that list. For now only basic sanitization is done.
+	 * _sanitize splits the data by message and returns a list of
+	 * messages without their line breaks.
 	 */
 	_sanitize(data) {
-		// TODO: Improve write sanitization
-		var sanitized = [data.trim() + '\r\n'];
-		return sanitized;
+		// TODO: Improve sanitation if necessary
+		return data.trim().split('\r\n');
 	}
 }

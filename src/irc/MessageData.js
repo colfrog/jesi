@@ -5,5 +5,7 @@ export default class MessageData {
 		this.params = [];
 		this.tail = '';
 		this.tags = {};
+
+		// TODO: Parse the data to fill in the attributes
 	}
 }

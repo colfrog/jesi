@@ -10,7 +10,7 @@ var servInfo = new ServerInfo({
 var userInfo = new UserInfo({
 	realname: 'Jessie Jane',
 	ident: 'jesi',
-	name: 'jesi'
+	nick: 'jesi'
 });
 
 var client = new IRC();
