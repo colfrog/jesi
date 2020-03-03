@@ -5,7 +5,16 @@ export default class IRC {
 		this.servers = {};
 	}
 
-	addServer(serverName, hostName, port, TLS) {
-		this.servers[serverName] = new Server(serverName, hostName, port, TLS);
+	addServer(servInfo, userInfo) {
+		this.servers[servInfo.name] = new Server(servInfo, userInfo);
+	}
+
+	getServer(name) {
+		return this.servers[name];
+	}
+
+	removeServer(name) {
+		this.servers[name].close();
+		this.servers[name] = null;
 	}
 }
