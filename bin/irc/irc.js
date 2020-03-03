@@ -16,11 +16,10 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
 var irc = /*#__PURE__*/function () {
-  function irc(server_name, host_name, port, tls) {
+  function irc() {
     _classCallCheck(this, irc);
 
     this.servers = {};
-    if (typeof server_name !== 'undefined' && typeof host_name !== 'undefined' && typeof port !== 'undefined') this.add_server(server_name, host_name, port, tls);
   }
 
   _createClass(irc, [{
