@@ -7,8 +7,7 @@
   "author": "Laurent Cimon <laurent@nilio.ca>",
   "license": "BSD-2-Clause",
   "private": false,
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.8.6"
   },
