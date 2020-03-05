@@ -7,8 +7,10 @@ export default class ServerInfo {
 	 * port: The server's port (default to -1)
 	 * pass: The server's password (default to null)
 	 * tls: Whether to use TLS (default to true, but depends on the port)
-	 * initialChannels: The initial channels to join (default to [])
+	 * channels: The channels to join (default to [])
 	 * encoding: The server's supported encoding (default to 'utf8')
+	 * nsIdent: Your NickServ identity, unused if undefined
+	 * nsPass: Your NickServ password, unused if undefined
 	 */
 	constructor(servInfo) {
 		this.name = servInfo.name || '';
@@ -17,8 +19,13 @@ export default class ServerInfo {
 		this.tls = this.isTLS(servInfo.tls);
 		this.pass = servInfo.pass || null;
 		// TODO: Find a way to save channels between sessions
-		this.channels = servInfo.initialChannels;
+		this.channels = servInfo.channels || [];
 		this.encoding = servInfo.encoding || 'utf8';
+		this.nsIdent = servInfo.nsIdent;
+		// TODO: secure the password?
+		this.nsPass = servInfo.nsPass;
+
+		// TODO: Add SASL info and work towards supporting it
 	}
 
 	isTLS(tls) {
