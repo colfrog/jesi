@@ -32,13 +32,17 @@ export default class Server {
 		}
 	}
 
+	async handleMessage(msg) {
+		console.log(this.info.name + ' -> ' + msg);
+		let msgData = new MessageData(msg);
+		await msgData.parse();
+		if (msgData.valid)
+			this.hooks.runHooks(this, msgData);
+	}
+
 	async _onSocketData(data) {
 		var chunks = this._sanitize(data);
-		chunks.forEach((chunk) => {
-			console.log(this.info.name + ' -> ' + chunk);
-			const msgData = new MessageData(data);
-			this.hooks.runHooks(this, msgData);
-		});
+		chunks.forEach(this.handleMessage.bind(this));
 	}
 
 	async _onSocketConnected() {

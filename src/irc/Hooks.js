@@ -33,7 +33,7 @@ export default class Hooks {
 
 	_runHook(command, server, msgData) {
 		if (this._hooks[command])
-			this._hooks[command].forEach((f) => f(server, msgData));
+			this._hooks[command].forEach(async (f) => f(server, msgData));
 	}
 
 	runPreInitHooks(server) {
