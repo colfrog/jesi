@@ -15,7 +15,7 @@ export default class Server {
 		// Add core hooks
 		coreHooks.addTo(this);
 
-		this._socket = this._makeSocket();
+		this.connect();
 	}
 
 	connect() {

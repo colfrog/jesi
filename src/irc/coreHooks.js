@@ -60,6 +60,7 @@ coreHooks.addTo = function(server) {
 	hooks.add('001', doPostInit);
 	hooks.add('PING', doPong);
 	hooks.add('PRIVMSG', doBlam);
+	hooks.add('INVITE', onInvite);
 
 	if (server.info.nsIdent && server.info.nsPass)
 		hooks.add('900', joinChannels);
