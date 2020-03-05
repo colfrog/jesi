@@ -5,8 +5,8 @@ export default class IRC {
 		this.servers = {};
 	}
 
-	addServer(servInfo, userInfo) {
-		this.servers[servInfo.name] = new Server(servInfo, userInfo);
+	addServer(servInfo) {
+		this.servers[servInfo.name] = new Server(servInfo);
 	}
 
 	getServer(name) {

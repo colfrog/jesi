@@ -1,14 +1,9 @@
-import coreHooks from './coreHooks';
-
 export default class Hooks {
 	constructor() {
 		this._hooks = {};
 		this._preInitKey = '%PREINIT%';
 		this._postInitKey = '%POSTINIT%';
 		this._closingKey = '%CLOSING%';
-
-		// Process core hooks
-		coreHooks.addTo(this);
 	}
 
 	add(command, func) {

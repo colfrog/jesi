@@ -3,13 +3,30 @@ import tls from 'tls';
 import regeneratorRuntime from 'regenerator-runtime';
 
 import Hooks from './Hooks';
+import coreHooks from './coreHooks';
 import MessageData from './MessageData';
 
 export default class Server {
-	constructor(info, user) {
+	constructor(info) {
+		this.connected = false;
 		this.info = info;
-		this.user = user;
+
 		this.hooks = new Hooks();
+		// Add core hooks
+		coreHooks.addTo(this);
+
+		this._socket = this._makeSocket();
+	}
+
+	connect() {
+		if (this.connected)
+			return;
+		this._socket = this._makeSocket();
+	}
+
+	reconnect() {
+		if (this.connected)
+			close();
 		this._socket = this._makeSocket();
 	}
 
@@ -18,8 +35,10 @@ export default class Server {
 	}
 
 	close() {
-		this.hooks.runClosingHooks(this);
-		this._socket.destroy();
+		if (this.connected) {
+			this.hooks.runClosingHooks(this);
+			this._socket.destroy();
+		}
 	}
 
 	async write(data) {
@@ -46,6 +65,7 @@ export default class Server {
 	}
 
 	async _onSocketConnected() {
+		this.connected = true;
 		console.log('Connected to ' + this.info.name);
 		console.log('Running pre-init hooks');
 		this.hooks.runPreInitHooks(this);
@@ -60,8 +80,8 @@ export default class Server {
 		 * end or error can be called, since a socket error prevents
 		 * the FIN packet from being received.
 		 */
+		// Throw the error instead?
 		this._socket = this._makeSocket();
-		// TODO: Eventually we'll throw the error
 	}
 
 	async _onSocketEnd() {
@@ -69,6 +89,10 @@ export default class Server {
 			'. Attempting to reconnect...');
 		this.hooks.runClosingHooks(this);
 		this._socket = this._makeSocket();
+	}
+
+	async _onSocketClosed(hadError) {
+		this.connected = false;
 	}
 
 	_makeSocket() {
@@ -98,6 +122,7 @@ export default class Server {
 		socket.on('connect', this._onSocketConnected.bind(this));
 		socket.on('error', this._onSocketError.bind(this));
 		socket.on('end', this._onSocketEnd.bind(this));
+		socket.on('close', this._onSocketClosed.bind(this));
 
 		return socket;
 	}

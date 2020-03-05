@@ -1,10 +1,11 @@
 export default class ServerInfo {
 	/*
 	 * TODO: Make globally configurable defaults
-	 * The servInfo object:
-	 * name: The server name (default to '')
-	 * host: The server's host (default to '')
-	 * port: The server's port (default to -1)
+	 * The ServInfo object:
+	 * userInfo: A UserInfo object (required)
+	 * name: The server name (required)
+	 * host: The server's host (required)
+	 * port: The server's port (required)
 	 * pass: The server's password (default to null)
 	 * tls: Whether to use TLS (default to true, but depends on the port)
 	 * channels: The channels to join (default to [])
@@ -13,13 +14,14 @@ export default class ServerInfo {
 	 * nsPass: Your NickServ password, unused if undefined
 	 */
 	constructor(servInfo) {
-		this.name = servInfo.name || '';
-		this.host = servInfo.host || '';
-		this.port = servInfo.port || -1;
+		this.user = servInfo.userInfo || throw 'User info is required.';
+		this.name = servInfo.name || throw 'Server name is required.';
+		this.host = servInfo.host || throw 'Server hostname is required.';
+		this.port = servInfo.port || throw 'Server port is required.';
 		this.tls = this.isTLS(servInfo.tls);
 		this.pass = servInfo.pass || null;
 		// TODO: Find a way to save channels between sessions
-		this.channels = servInfo.channels || [];
+		this.channelNames = servInfo.channels || [];
 		this.encoding = servInfo.encoding || 'utf8';
 		this.nsIdent = servInfo.nsIdent;
 		// TODO: secure the password?
