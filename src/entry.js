@@ -22,9 +22,9 @@ var servInfo = new ServerInfo({
 	port: 6697, // TLS is known from the port
 	channels: ['#jesi', '#jesi-dev']
 });
-
 client.addServer(servInfo, userInfo);
 
+/*
 servInfo = new ServerInfo({
 	userInfo: otherUserInfo,
 	name: 'Rizon',
@@ -40,3 +40,4 @@ servInfo = new ServerInfo({
 	port: 6697
 });
 client.addServer(servInfo);
+*/

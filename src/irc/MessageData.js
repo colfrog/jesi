@@ -16,6 +16,20 @@ export default class MessageData {
 		this.tags = {};
 	}
 
+	isWordValid(word) {
+		// TODO: Add more checks
+		return typeof word === 'string' && word !== null && word.length > 0;
+	}
+
+	getCommandIndex(words) {
+		// Just take the first all-caps word for now
+		for (let i = 0; i < words.length; i++) {
+			let match = words[i].match(/[A-Z|0-9]/g);
+			if (match && match.length === words[i].length)
+				return i;
+		}
+	}
+
 	async parse() {
 		const words = this.raw
 			.trim()
@@ -40,20 +54,6 @@ export default class MessageData {
 		     this.params.length > 0 &&
 		     this.tail.length > 0))
 			this.valid = true;
-	}
-
-	isWordValid(word) {
-		// TODO: Add more checks
-		return typeof word === 'string' && word !== null && word.length > 0;
-	}
-
-	getCommandIndex(words) {
-		// Just take the first all-caps word for now
-		for (let i = 0; i < words.length; i++) {
-			let match = words[i].match(/[A-Z|0-9]/g);
-			if (match && match.length === words[i].length)
-				return i;
-		}
 	}
 
 	// TODO: These algorithms should be improved as needed
