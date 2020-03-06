@@ -54,7 +54,7 @@ export default class Server {
 	async handleMessage(msg) {
 		console.log(this.info.name + ' -> ' + msg);
 		let msgData = new MessageData(msg);
-		await msgData.parse();
+		msgData.parse();
 		if (msgData.valid)
 			this.hooks.runHooks(this, msgData);
 	}

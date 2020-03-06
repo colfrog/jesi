@@ -30,7 +30,7 @@ export default class MessageData {
 		}
 	}
 
-	async parse() {
+	parse() {
 		const words = this.raw
 			.trim()
 			.split(' ')
