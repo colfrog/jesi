@@ -40,12 +40,10 @@ export default class MessageData {
 			return;
 
 		let cmdIndex = this.getCommandIndex(words);
-		await Promise.all([
-			this.parsePrefix(words, cmdIndex),
-			this.parseTags(words, cmdIndex),
-			this.parseCommand(words, cmdIndex),
-			this.parseParamsAndTail(words, cmdIndex)
-		]);
+		this.parsePrefix(words, cmdIndex),
+		this.parseTags(words, cmdIndex),
+		this.parseCommand(words, cmdIndex),
+		this.parseParamsAndTail(words, cmdIndex)
 
 		if ((typeof this.command === 'string' &&
 		     typeof this.params === 'object' &&
@@ -58,12 +56,12 @@ export default class MessageData {
 
 	// TODO: These algorithms should be improved as needed
 
-	async parsePrefix(words, cmdIndex) {
+	parsePrefix(words, cmdIndex) {
 		if (cmdIndex > 0)
 			this.prefix = words[cmdIndex - 1];
 	}
 
-	async parseTag(rawTag) {
+	parseTag(rawTag) {
 		const isClient = rawTag[0] === '+';
 		const tagAndKey = rawTag.split('=');
 		const vendorAndKeyName = tagAndKey.split('/');
@@ -80,7 +78,7 @@ export default class MessageData {
 		this.tags[tagValue] = tag;
 	}
 
-	async parseTags(words, cmdIndex) {
+	parseTags(words, cmdIndex) {
 		if (cmdIndex > 1)
 			var rawTags = words[cmdIndex - 2];
 		else
@@ -90,14 +88,14 @@ export default class MessageData {
 			return;
 
 		tagList = rawTags.slice(1).split(';');
-		await tagList.forEach(parseTag);
+		tagList.forEach(parseTag);
 	}
 
-	async parseCommand(words, index) {
+	parseCommand(words, index) {
 		this.command = words[index];
 	}
 
-	async parseParamsAndTail(words, cmdIndex) {
+	parseParamsAndTail(words, cmdIndex) {
 		for (var i = cmdIndex + 1; i < words.length && words[i][0] != ':'; i++)
 			this.params.push(words[i]);
 
