@@ -1,6 +1,6 @@
-import ServerInfo from './irc/ServerInfo';
-import UserInfo from './irc/UserInfo';
-import IRC from './irc/IRC';
+import ServerInfo from './irc/server-info';
+import UserInfo from './irc/user-info';
+import IRC from './irc/irc';
 
 var client = new IRC();
 // TODO: Parse userInfo and servInfo from a configuration file

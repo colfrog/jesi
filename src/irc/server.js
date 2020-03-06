@@ -2,9 +2,9 @@ import net from 'net';
 import tls from 'tls';
 import regeneratorRuntime from 'regenerator-runtime';
 
-import Hooks from './Hooks';
-import coreHooks from './coreHooks';
-import MessageData from './MessageData';
+import Hooks from './hooks';
+import coreHooks from './core-hooks';
+import MessageData from './message-data';
 
 export default class Server {
 	constructor(info) {

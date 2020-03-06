@@ -1,4 +1,4 @@
-import IRC3Tag from './IRC3Tag';
+import IRC3Tag from './irc3-tag';
 
 export default class MessageData {
 	constructor(data) {

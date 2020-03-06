@@ -1,4 +1,4 @@
-import Server from './Server';
+import Server from './server';
 
 export default class IRC {
 	constructor() {
