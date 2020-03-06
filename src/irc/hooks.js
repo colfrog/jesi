@@ -10,7 +10,7 @@ export default class Hooks {
 		const hook = this._hooks[command];
 		if (typeof hook === 'undefined' || hook === null)
 			this._hooks[command] = [func];
-		else
+		else if (!hook.find(elem => elem === func))
 			this._hooks[command].push(func);
 	}
 
