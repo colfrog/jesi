@@ -52,6 +52,13 @@ function doBlam(server, msgData) {
 		server.write('NICK ' + server.info.user.nick);
 }
 
+function doEcho(server, msgData) {
+	let match = msgData.tail.match(/^echo\s(.+)$/);
+	let channel = msgData.params[0];
+	if (match !== null)
+		server.write('PRIVMSG ' + channel + ' :' + match[1]);
+}
+
 // TODO: Find a good IRC command to respond to to execute the post-init hooks
 coreHooks.addTo = function(server) {
 	let hooks = server.hooks;
@@ -60,6 +67,7 @@ coreHooks.addTo = function(server) {
 	hooks.add('001', doPostInit);
 	hooks.add('PING', doPong);
 	hooks.add('PRIVMSG', doBlam);
+	hooks.add('PRIVMSG', doEcho);
 	hooks.add('INVITE', onInvite);
 
 	if (server.info.nsIdent && server.info.nsPass)
