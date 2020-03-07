@@ -6,11 +6,13 @@ import Hooks from './hooks';
 import coreHooks from './core-hooks';
 import MessageData from './message-data';
 import ServerInfo from './server-info';
+import IRCWriter from './irc-writer';
 
 export default class Server {
 	constructor(info) {
 		this.connected = false;
 		this.info = new ServerInfo(info);
+		this.writer = new IRCWriter(this);
 
 		this.hooks = new Hooks();
 		// Add core hooks
@@ -41,13 +43,11 @@ export default class Server {
 	}
 
 	async write(data) {
-		var sanitized = this._sanitize(data);
-		for (let i = 0; i < sanitized.length; i++) {
-			let chunk = sanitized[i] + '\r\n';
-			this._socket.write(chunk, this.info.encoding, () => {
-				console.log(this.info.name + ' <- ' + chunk.trim());
-			});
-		}
+		// Data is not checked for correctness because Server.write
+		// should not be used outside of IRCWriter.
+		this._socket.write(data, this.info.encoding, () => {
+			console.log(this.info.name + ' <- ' + data.trim());
+		});
 	}
 
 	async handleMessage(msg) {
@@ -59,8 +59,8 @@ export default class Server {
 	}
 
 	async _onSocketData(data) {
-		var chunks = this._sanitize(data);
-		chunks.forEach(this.handleMessage.bind(this));
+		const msgs = this._splitMessages(data);
+		msgs.forEach(this.handleMessage.bind(this));
 	}
 
 	async _onSocketConnected() {
@@ -126,12 +126,7 @@ export default class Server {
 		return socket;
 	}
 
-	/*
-	 * _sanitize splits the data by message and returns a list of
-	 * messages without their line breaks.
-	 */
-	_sanitize(data) {
-		// TODO: Improve sanitation if necessary
+	_splitMessages(data) {
 		return data.trim().split('\r\n');
 	}
 }

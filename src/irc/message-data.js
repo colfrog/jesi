@@ -58,7 +58,7 @@ export default class MessageData {
 
 	parsePrefix(words, cmdIndex) {
 		if (cmdIndex > 0)
-			this.prefix = words[cmdIndex - 1];
+			this.prefix = words[cmdIndex - 1].slice(1);
 	}
 
 	parseTag(rawTag) {
