@@ -17,15 +17,18 @@ export default class CommandHandler {
 	}
 
 	add(command, code) {
-		let realCommand = this.module.prefix + command;
+		const realCommand = this.module.prefix + command;
 		if (this.commands[realCommand])
-			this.commands[realCommand] = [code];
-		else
 			this.commands[realCommand].push(code);
+		else
+			this.commands[realCommand] = [code];
 	}
 
 	del(command, code) {
 		let commands = this.commands.keys();
+		if (!commands)
+			return;
+
 		let realCommand = this.module.prefix + command;
 		for (let i = 0; i < commands.length; i++) {
 			let snippets = this.commands[commands[i]];
