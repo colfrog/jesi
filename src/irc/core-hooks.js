@@ -89,7 +89,7 @@ function doAct(server, msgData) {
 // TODO: Find a good IRC command to respond to to execute the post-init hooks
 coreHooks.addTo = function(server) {
 	let hooks = server.hooks;
-	hooks.addPreInit(registerClient);
+	// hooks.addPreInit(registerClient);
 	hooks.addPostInit(handleNickserv);
 	hooks.add('001', doPostInit);
 	hooks.add('PING', doPong);

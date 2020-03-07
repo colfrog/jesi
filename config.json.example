@@ -1,4 +1,5 @@
 {
+	"commandPrefix": "%",
 	"servers": [
 		{
 			"name": "Snoonet",
@@ -6,29 +7,30 @@
 			"port": 6697,
 			"channels": ["#jesi", "#jesi-dev"],
 			"nsIdent": "Your NickServ identity",
-			"nsPass": "You NickServ password",
+			"nsPass": "Your NickServ password",
 			"userInfo": {
 				"realname": "Jessie Jane",
 				"ident": "jesi",
-				"nick": "jesi"
+				"nick": "jesi-v0"
+			}
+		}
+	],
+	"modules": [
+		{
+			"name": "Register Client",
+			"description": "IRC Client Registration",
+			"path": "./modules/registerClient.js",
+			"permissions": {
+				"hasServerInfo": true,
+				"hasIRCWriter": true
 			}
 		}, {
-			"name": "Rizon",
-			"host": "irc.rizon.net",
-			"port": 6697,
-			"userInfo": {
-				"realname": "Jessie Jane",
-				"ident": "jesi",
-				"nick": "jesijane"
-			}
-		}, {
-			"name": "Rizon",
-			"host": "irc.rizon.net",
-			"port": 6697,
-			"userInfo": {
-				"realname": "Jessie Jane",
-				"ident": "jesi",
-				"nick": "jesijane"
+			"name": "ping pong",
+			"description": "Play ping pong!",
+			"path": "./modules/pingpong.js",
+			"permissions": {
+				"hasServerInfo": true,
+				"hasIRCWriter": true
 			}
 		}
 	]
