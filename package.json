@@ -1,6 +1,6 @@
 {
   "name": "jesi",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "xi's node.js IRC client",
   "main": "src/entry.js",
   "repository": "git@github.com:colfrog/jesi",
