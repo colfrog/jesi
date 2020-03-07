@@ -1,3 +1,5 @@
+import UserInfo from './user-info';
+
 export default class ServerInfo {
 	/*
 	 * TODO: Make globally configurable defaults
@@ -14,7 +16,7 @@ export default class ServerInfo {
 	 * nsPass: Your NickServ password, unused if undefined
 	 */
 	constructor(servInfo) {
-		this.user = servInfo.userInfo || throw 'User info is required.';
+		this.user = new UserInfo(servInfo.userInfo) || throw 'User info is required.';
 		this.name = servInfo.name || throw 'Server name is required.';
 		this.host = servInfo.host || throw 'Server hostname is required.';
 		this.port = servInfo.port || throw 'Server port is required.';

@@ -8,7 +8,6 @@
   "license": "BSD-2-Clause",
   "private": false,
   "dependencies": {
-    "bluebird": "^3.7.2",
     "regenerator-runtime": "^0.13.3"
   },
   "devDependencies": {

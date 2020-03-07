@@ -10,7 +10,7 @@ export default class IRC {
 	}
 
 	getServer(name) {
-		return this.servers[name];
+		return this.servers[name] || null;
 	}
 
 	removeServer(name) {

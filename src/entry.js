@@ -1,43 +1,20 @@
+import fs from 'fs';
+
 import ServerInfo from './irc/server-info';
 import UserInfo from './irc/user-info';
 import IRC from './irc/irc';
 
-var client = new IRC();
-// TODO: Parse userInfo and servInfo from a configuration file
-var userInfo = new UserInfo({
-	realname: 'Jessie Jane',
-	ident: 'jesi',
-	nick: 'jesi'
-});
-var otherUserInfo = new UserInfo ({
-	realname: 'Jessie Jane',
-	ident: 'jesi',
-	nick: 'jesijane'
-});
+// Parse userInfo and servInfo from config.json
+// TODO: Use a format that allows users to re-use their userInfo?
+const configFile = process.cwd() + '/config.json';
+fs.access(configFile, fs.constants.R_OK, err => {
+	if (err)
+		throw err;
 
-var servInfo = new ServerInfo({
-	userInfo: userInfo,
-	name: 'Snoonet',
-	host: 'irc.snoonet.org',
-	port: 6697, // TLS is known from the port
-	channels: ['#jesi', '#jesi-dev']
+	const config = require(configFile);
+	var client = new IRC();
+	config.servers.forEach((servInfo) => {
+		client.addServer(servInfo);
+		client.getServer(servInfo.name).connect();
+	});
 });
-client.addServer(servInfo, userInfo);
-
-/*
-servInfo = new ServerInfo({
-	userInfo: otherUserInfo,
-	name: 'Rizon',
-	host: 'irc.rizon.net',
-	port: 6697
-});
-client.addServer(servInfo, userInfo);
-
-servInfo = new ServerInfo({
-	userInfo: otherUserInfo,
-	name: 'Freenode',
-	host: 'irc.freenode.net',
-	port: 6697
-});
-client.addServer(servInfo);
-*/

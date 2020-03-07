@@ -2,7 +2,7 @@
 export default function coreHooks() {}
 
 function registerClient(server) {
-	const pass = server.info.user.pass;
+	const pass = server.info.pass;
 	const realname = server.info.user.realname;
 	const ident = server.info.user.ident;
 	const nick = server.info.user.nick;
@@ -25,7 +25,8 @@ function handleNickserv(server) {
 	const ident = server.info.nsIdent;
 	const pass = server.info.nsPass;
 
-	if (ident && pass)
+	if (typeof ident === 'string' && typeof pass === 'string' &&
+	    ident.length > 0 && pass.length > 0)
 		// TODO: Make a wrapper around PRIVMSG
 		server.write('PRIVMSG NickServ :IDENTIFY ' + ident + ' ' + pass);
 }

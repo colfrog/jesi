@@ -1,0 +1,35 @@
+{
+	"servers": [
+		{
+			"name": "Snoonet",
+			"host": "irc.snoonet.org",
+			"port": 6697,
+			"channels": ["#jesi", "#jesi-dev"],
+			"nsIdent": "Your NickServ identity",
+			"nsPass": "You NickServ password",
+			"userInfo": {
+				"realname": "Jessie Jane",
+				"ident": "jesi",
+				"nick": "jesi"
+			}
+		}, {
+			"name": "Rizon",
+			"host": "irc.rizon.net",
+			"port": 6697,
+			"userInfo": {
+				"realname": "Jessie Jane",
+				"ident": "jesi",
+				"nick": "jesijane"
+			}
+		}, {
+			"name": "Rizon",
+			"host": "irc.rizon.net",
+			"port": 6697,
+			"userInfo": {
+				"realname": "Jessie Jane",
+				"ident": "jesi",
+				"nick": "jesijane"
+			}
+		}
+	]
+}

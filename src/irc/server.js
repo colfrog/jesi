@@ -5,26 +5,25 @@ import regeneratorRuntime from 'regenerator-runtime';
 import Hooks from './hooks';
 import coreHooks from './core-hooks';
 import MessageData from './message-data';
+import ServerInfo from './server-info';
 
 export default class Server {
 	constructor(info) {
 		this.connected = false;
-		this.info = info;
+		this.info = new ServerInfo(info);
 
 		this.hooks = new Hooks();
 		// Add core hooks
 		coreHooks.addTo(this);
-
-		this.connect();
 	}
 
-	connect() {
+	async connect() {
 		if (this.connected)
 			return;
 		this._socket = this._makeSocket();
 	}
 
-	reconnect() {
+	async reconnect() {
 		if (this.connected)
 			close();
 		this._socket = this._makeSocket();
