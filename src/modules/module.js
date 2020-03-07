@@ -75,8 +75,9 @@ export default class Module {
 	}
 
 	async run(code, msgData) {
-		// TODO: Make sure the code is fine
+		// TODO: Pass msgData in a way that won't shit itself when executed asynchronously
 		this.context.msgData = msgData;
+		// TODO: Make sure the code is fine
 		vm.runInContext(code, this.context, this._contextOptions);
 	}
 
