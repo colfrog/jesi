@@ -40,12 +40,10 @@ function joinChannels(server) {
 
 function doNotice(server, msgData) {
 	const match = msgData.tail.match(/^jesi, notice me please$/);
-	const prefixMatch = msgData.prefix.match(/^(.+?)!.+?@.+?$/);
 	const response = 'You are beautiful and you deserve to be loved.';
 
-	if (prefixMatch && prefixMatch[1] && match !== null) {
-		let user = prefixMatch[1];
-		server.writer.sendNotice(user, response);
+	if (msgData.fromUser && match !== null) {
+		server.writer.sendNotice(msgData.nick, response);
 	}
 }
 

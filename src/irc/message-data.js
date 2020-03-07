@@ -8,12 +8,22 @@ export default class MessageData {
 			return;
 		}
 
+		// Raw data
 		this.raw = data;
+
+		// Message parts
 		this.prefix = '';
 		this.command = '';
 		this.params = [];
 		this.tail = '';
 		this.tags = {};
+
+		// Nick, ident, realname from messages and notices
+		// TODO: Maybe reference the UserInfo when we'll keep a user list
+		this.fromUser = false;
+		this.nick = '';
+		this.ident = '';
+		this.realname = '';
 	}
 
 	isWordValid(word) {
@@ -54,11 +64,19 @@ export default class MessageData {
 			this.valid = true;
 	}
 
-	// TODO: These algorithms should be improved as needed
-
 	parsePrefix(words, cmdIndex) {
 		if (cmdIndex > 0)
 			this.prefix = words[cmdIndex - 1].slice(1);
+
+		const prefix = this.prefix;
+		// TODO: improve the regex
+		const match = prefix.match(/^(.+?)!(.+?)@(.+?)$/);
+		if (match !== null) {
+			this.fromUser = true;
+			this.nick = match[1];
+			this.ident = match[2];
+			this.realname = match[3];
+		}
 	}
 
 	parseTag(rawTag) {
