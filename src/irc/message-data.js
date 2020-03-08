@@ -29,7 +29,7 @@ export default class MessageData {
 
 	isWordValid(word) {
 		// TODO: Add more checks
-		return typeof word === 'string' && word !== null && word.length > 0;
+		return typeof word === 'string' && word.length > 0;
 	}
 
 	getCommandIndex(words) {
@@ -46,9 +46,6 @@ export default class MessageData {
 			.trim()
 			.split(' ')
 			.filter(this.isWordValid);
-
-		if (typeof words === 'undefined' || words == null || words.length === 0)
-			return;
 
 		let cmdIndex = this.getCommandIndex(words);
 		this.parsePrefix(words, cmdIndex),
