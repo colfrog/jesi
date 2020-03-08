@@ -7,4 +7,5 @@
 * Channel and user tracking (as a module?)
 * Add user privilege checks to the permission-based filter
 * HTTP API (as a module)
-* Web-based interface
+* Web-based IRC client interface
+* Allow users to configure and start IRC bots from the available modules in the server, from the interface
