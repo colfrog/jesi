@@ -4,14 +4,18 @@ export default class CommandHandler {
 		this.module = module || throw 'Module not given to command handler.';
 		this.commands = {};
 	}
-
+	
 	run(msgData) {
-		let command = getCommand(msgData);
+		if (!msgData.tail.startsWith(this.module.prefix))
+			return;
+
+		let command = msgData.tailWords[0];
 		let snippets = this.commands[command];
 		if (snippets) {
 			snippets.forEach((code) => {
+				console.log(code);
 				if (typeof code === 'string')
-					this.module.run(code);
+					this.module.run(code, msgData);
 			});
 		}
 	}

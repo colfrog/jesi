@@ -1,0 +1,23 @@
+[
+	{
+		"name": "IRC Core",
+		"description": "Core IRC client functionality",
+		"path": "./bin/core-modules/core.js",
+		"core": true
+	}, {
+		"name": "NickServ Registration",
+		"description": "Register through NickServ",
+		"path": "./bin/core-modules/nickserv.js",
+		"core": true
+	}, {
+		"name": "Channel Utilities",
+		"description": "Enables channel-related functionality",
+		"path": "./bin/core-modules/channel.js",
+		"core": true
+	}, {
+		"name": "Temporary Commands",
+		"description": "Temporary commands for testing",
+		"path": "./bin/core-modules/temporary-commands.js",
+		"core": true
+	}
+]

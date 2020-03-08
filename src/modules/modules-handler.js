@@ -1,15 +1,17 @@
 import Module from './module';
+import coreModules from '../core-modules/core-modules.json';
 
+// TODO: Allow rewriting the JSON files
 export default class ModulesHandler {
 	constructor(server, prefix, modules) {
 		this.server = server || throw 'Modules handler was created without a valid server.';
 		this.prefix = prefix || '';
-		this.modules = [];
+		this.modules = {};
 
 		if (!modules || typeof modules !== 'object' || !modules.forEach)
 			return;
 
-		this.initModules(modules);
+		this.initModules(coreModules.concat(modules));
 
 		server.hooks.add('*', this.toModules.bind(this));
 		server.hooks.addPreInit(this.runPreInit.bind(this));
@@ -17,35 +19,50 @@ export default class ModulesHandler {
 		server.hooks.addClosing(this.runClosing.bind(this));
 	}
 
-	initModules(modules) {
-		modules.forEach((elem) => {
-			let module = new Module(this.server, this.prefix, elem);
-			let name = module.name;
-			module.init(this.server);
+	addModule(moduleObj) {
+		let module = new Module(this.server, this.prefix, moduleObj);
+		let name = module.name;
+		module.init(this.server);
 
-			if (this.modules[name])
-				throw 'Module ' + name + ' was defined twice.';
-			else
-				this.modules.push(module);
-		});
+		if (this.modules[name])
+			throw 'Module ' + name + ' was defined twice.';
+		else
+			this.modules[name] = module;
+	}
+
+	delModule(name) {
+		if (this.modules[name])
+			delete this.modules[name];
+	}
+
+	refreshModule(name) {
+		this.modules[name].refresh();
+	}
+
+	refreshModules() {
+		Object.values(this.modules).forEach(module => module.refresh());
+	}
+
+	initModules(modules) {
+		modules.forEach(this.addModule.bind(this));
 	}
 
 	toModules(server, msgData) {
 		let hooks = server.hooks;
-		this.modules.forEach((module) => {
+		Object.values(this.modules).forEach((module) => {
 			module.handleMessage(msgData);
 		});
 	}
 
 	runPreInit(server) {
-		this.modules.forEach(module => module.runPreInit());
+		Object.values(this.modules).forEach(module => module.runPreInit());
 	}
 
 	runPostInit(server) {
-		this.modules.forEach(module => module.runPostInit());
+		Object.values(this.modules).forEach(module => module.runPostInit());
 	}
 
 	runClosing(server) {
-		this.modules.forEach(module => module.runClosing());
+		Object.values(this.modules).forEach(module => module.runClosing());
 	}
 }

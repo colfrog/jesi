@@ -16,6 +16,7 @@ export default class MessageData {
 		this.command = '';
 		this.params = [];
 		this.tail = '';
+		this.tailWords = [];
 		this.tags = {};
 
 		// Nick, ident, realname from messages and notices
@@ -121,5 +122,6 @@ export default class MessageData {
 		let tail = raw.slice(raw.indexOf(words[i]) + 1).trim();
 		this.params.push(tail);
 		this.tail = tail;
+		this.tailWords = tail.split(' ');
 	}
 }

@@ -14,6 +14,7 @@ export default class Module {
 	 * path: Path to the entry file (required)
 	 * prefix: The command prefix (default to '')
 	 * permissions: A ModulePermissions object (required)
+	 * settings: Module-specific settings
 	 */
 	constructor(server, prefix, params) {
 		this.server = server || throw 'Module server is required.';
@@ -21,7 +22,9 @@ export default class Module {
 		this.description = params.description || '';
 		this.path = params.path || throw 'Module entry path is required';
 		this.prefix = prefix || '';
-		this.perms = new ModulePermissions(params.permissions);
+		this.core = params.core || false;
+		this.perms = new ModulePermissions(this.core, params.permissions);
+		this.settings = params.settings || {};
 
 		this.preinit = [];
 		this.postinit = [];
@@ -53,8 +56,10 @@ export default class Module {
 			ircWriter = server.writer;
 
 		let context = {
+			console: console,
 			require: require,
 			commandPrefix: this.prefix,
+			settings: this.settings,
 			serverInfo: serverInfo,
 			ircWriter: ircWriter,
 			addPreInit: this.addPreInit.bind(this),
@@ -69,16 +74,17 @@ export default class Module {
 		return vm.createContext(context);
 	}
 
-	handleMessage(server, msgData) {
+	handleMessage(msgData) {
 		this.hooks.run(msgData);
-		this.commands.run(msgData);
+		if (msgData.command === 'PRIVMSG')
+			this.commands.run(msgData);
 	}
 
 	async run(code, msgData) {
-		// TODO: Pass msgData in a way that won't shit itself when executed asynchronously
-		this.context.msgData = msgData;
-		// TODO: Make sure the code is fine
-		vm.runInContext(code, this.context, this._contextOptions);
+		// TODO: Handle code errors gracefully
+		// TODO: Find a better way of passing msgData, this is evil
+		vm.runInContext(code + '(' + JSON.stringify(msgData) + ')',
+			this.context, this._contextOptions);
 	}
 
 	async init(server) {
@@ -115,7 +121,6 @@ export default class Module {
 	}
 
 	runPreInit() {
-		console.log('Running preinit hooks for module');
 		this.preinit.forEach(code => this.run(code));
 	}
 

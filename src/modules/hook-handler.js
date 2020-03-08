@@ -9,16 +9,16 @@ export default class HookHandler {
 		if (snippets) {
 			snippets.forEach((code) => {
 				if (typeof code === 'string')
-					this.module.run(code);
+					this.module.run(code, msgData);
 			});
 		}
 	}
 
 	add(command, code) {
 		if (this.hooks[command])
-			this.hooks[command] = [code];
-		else
 			this.hooks[command].push(code);
+		else
+			this.hooks[command] = [code];
 	}
 
 	del(command, code) {

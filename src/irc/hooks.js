@@ -4,6 +4,9 @@ export default class Hooks {
 		this._preInitKey = '%PREINIT%';
 		this._postInitKey = '%POSTINIT%';
 		this._closingKey = '%CLOSING%';
+
+		// Do post-init hooks when the server sends 001
+		this.add('001', this._doPostInit.bind(this));
 	}
 
 	add(command, func) {
@@ -26,25 +29,32 @@ export default class Hooks {
 		this.add(this._closingKey, func);
 	}
 
-	_runHook(command, server, msgData) {
-		if (this._hooks[command])
-			this._hooks[command].forEach(async (f) => f(server, msgData));
-	}
-
 	runPreInitHooks(server) {
+		console.log('Running pre-init hooks for ' + server.info.name + '.');
 		this._runHook(this._preInitKey, server, null);
 	}
 
 	runPostInitHooks(server) {
+		console.log('Running post-init hooks for ' + server.info.name + '.');
 		this._runHook(this._postInitKey, server, null);
 	}
 
 	runClosingHooks(server) {
+		console.log('Running closing hooks for ' + server.info.name + '.');
 		this._runHook(this._closingKey, server, null);
 	}
 
 	runHooks(server, msgData) {
 		this._runHook('*', server, msgData);
 		this._runHook(msgData.command, server, msgData);
+	}
+
+	_runHook(command, server, msgData) {
+		if (this._hooks[command])
+			this._hooks[command].forEach(async (f) => f(server, msgData));
+	}
+
+	_doPostInit(server) {
+		this.runPostInitHooks(server);
 	}
 }

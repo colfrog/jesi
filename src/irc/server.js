@@ -3,7 +3,6 @@ import tls from 'tls';
 import regeneratorRuntime from 'regenerator-runtime';
 
 import Hooks from './hooks';
-import coreHooks from './core-hooks';
 import MessageData from './message-data';
 import ServerInfo from './server-info';
 import IRCWriter from './irc-writer';
@@ -15,8 +14,6 @@ export default class Server {
 		this.writer = new IRCWriter(this);
 
 		this.hooks = new Hooks();
-		// Add core hooks
-		coreHooks.addTo(this);
 	}
 
 	async connect() {
@@ -66,7 +63,6 @@ export default class Server {
 	async _onSocketConnected() {
 		this.connected = true;
 		console.log('Connected to ' + this.info.name);
-		console.log('Running pre-init hooks');
 		this.hooks.runPreInitHooks(this);
 	}
 

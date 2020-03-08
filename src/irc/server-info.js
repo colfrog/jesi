@@ -26,10 +26,14 @@ export default class ServerInfo {
 		this.channelNames = servInfo.channels || [];
 		this.encoding = servInfo.encoding || 'utf8';
 		this.nsIdent = servInfo.nsIdent;
-		// TODO: secure the password?
+		// TODO: Secure the password! It's passed to extensions!
 		this.nsPass = servInfo.nsPass;
 
 		// TODO: Add SASL info and work towards supporting it
+	}
+
+	willRegister() {
+		return this.nsIdent && this.nsPass;
 	}
 
 	isTLS(tls) {

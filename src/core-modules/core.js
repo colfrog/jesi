@@ -1,4 +1,4 @@
-function registerClient() {
+function registerClient(msgData) {
 	const pass = serverInfo.pass;
 	const realname = serverInfo.user.realname;
 	const ident = serverInfo.user.ident;
@@ -11,4 +11,9 @@ function registerClient() {
 	ircWriter.sendCommand('USER', [ident, '*', '*', realname]);
 }
 
-addPreInit('registerClient()');
+function doPong(msgData) {
+	ircWriter.sendCommand('PONG', msgData.params[0]);
+}
+
+addPreInit('registerClient');
+addHook('PING', 'doPong');

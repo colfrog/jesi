@@ -1,7 +1,8 @@
 {
   "plugins": [
     "@babel/plugin-proposal-throw-expressions",
-    "@babel/plugin-transform-async-to-generator"
+    "@babel/plugin-transform-async-to-generator",
+    "inline-json-import"
   ],
   "presets": ["@babel/preset-env"]
 }
