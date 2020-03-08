@@ -43,12 +43,12 @@ export default class Server {
 		// Data is not checked for correctness because Server.write
 		// should not be used outside of IRCWriter.
 		this._socket.write(data, this.info.encoding, () => {
-			console.log(this.info.name + ' <- ' + data.trim());
+			console.log(this.info.name + ' <-- ' + data.trim());
 		});
 	}
 
 	async handleMessage(msg) {
-		console.log(this.info.name + ' -> ' + msg);
+		console.log(this.info.name + ' --> ' + msg);
 		let msgData = new MessageData(msg);
 		msgData.parse();
 		if (msgData.valid)
