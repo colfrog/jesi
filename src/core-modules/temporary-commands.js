@@ -29,7 +29,7 @@ function doBlam(msgData) {
 function doEcho(msgData) {
 	let match = msgData.tail.match(/echo\s(.+)$/);
 	let channel = msgData.params[0];
-	if (match !== null)
+	if (match !== null && match[1][0] !== '!')
 		ircWriter.sendMessage(channel, match[1]);
 }
 
