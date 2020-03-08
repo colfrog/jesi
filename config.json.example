@@ -17,14 +17,6 @@
 	],
 	"modules": [
 		{
-			"name": "Register Client",
-			"description": "IRC Client Registration",
-			"path": "./modules/registerClient.js",
-			"permissions": {
-				"hasServerInfo": true,
-				"hasIRCWriter": true
-			}
-		}, {
 			"name": "ping pong",
 			"description": "Play ping pong!",
 			"path": "./modules/pingpong.js",
