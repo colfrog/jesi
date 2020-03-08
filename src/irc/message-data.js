@@ -19,12 +19,12 @@ export default class MessageData {
 		this.tailWords = [];
 		this.tags = {};
 
-		// Nick, ident, realname from messages and notices
+		// Nick, ident, host from messages and notices
 		// TODO: Maybe reference the UserInfo when we'll keep a user list
 		this.fromUser = false;
 		this.nick = '';
 		this.ident = '';
-		this.realname = '';
+		this.host = '';
 	}
 
 	isWordValid(word) {
@@ -76,7 +76,7 @@ export default class MessageData {
 			this.fromUser = true;
 			this.nick = match[1];
 			this.ident = match[2];
-			this.realname = match[3];
+			this.host = match[3];
 		}
 	}
 
@@ -122,6 +122,6 @@ export default class MessageData {
 		let tail = raw.slice(raw.indexOf(words[i]) + 1).trim();
 		this.params.push(tail);
 		this.tail = tail;
-		this.tailWords = tail.split(' ');
+		this.tailWords = tail.split(' ').filter(word => word.length > 0);
 	}
 }

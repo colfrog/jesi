@@ -13,7 +13,6 @@ export default class CommandHandler {
 		let snippets = this.commands[command];
 		if (snippets) {
 			snippets.forEach((code) => {
-				console.log(code);
 				if (typeof code === 'string')
 					this.module.run(code, msgData);
 			});

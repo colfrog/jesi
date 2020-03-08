@@ -9,8 +9,5 @@ function onInvite(msgData) {
 }
 
 addHook('INVITE', 'onInvite');
-
-if (serverInfo.willRegister())
-	addHook('900', 'joinChannels');
-else
-	addPostInit('joinChannels');
+addPostInit('joinChannels');
+addHook('900', 'joinChannels'); // Reattempt after being registered

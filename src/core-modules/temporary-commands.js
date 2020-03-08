@@ -22,8 +22,29 @@ function doLeave(msgData) {
 	}
 }
 
+var blamLocked = false;
 function doBlam(msgData) {
-	ircWriter.sendCommand('NICK', serverInfo.user.nick);
+	let nick = '';
+	if (msgData.tailWords.length > 1)
+		nick = msgData.tailWords[1]
+	else
+		nick = serverInfo.user.nick;
+
+	if (nick !== serverInfo.user.nick && msgData.host === 'nuxi.ca') {
+		switch (nick) {
+		case 'lock':
+			blamLocked = true;
+			ircWriter.sendNotice(msgData.nick, 'Blam locked.');
+			break;
+		case 'unlock':
+			blamLocked = false;
+			ircWriter.sendNotice(msgData.nick, 'Blam unlocked.');
+			break;
+		default:
+			if (!blamLocked)
+				ircWriter.sendCommand('NICK', nick);
+		}
+	}
 }
 
 function doEcho(msgData) {
