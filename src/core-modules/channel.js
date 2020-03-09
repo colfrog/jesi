@@ -1,5 +1,5 @@
 function joinChannels(msgData) {
-	let channels = serverInfo.channelNames;
+	let channels = serverInfo.user.channelNames;
 	if (channels.length > 0)
 		ircWriter.joinChannels(channels);
 }

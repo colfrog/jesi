@@ -16,18 +16,22 @@ export default class ServerInfo {
 	 * nsPass: Your NickServ password, unused if undefined
 	 */
 	constructor(servInfo) {
+		// For configuration, channels make more sense in the server,
+		// but placing them in a user can simplify the program.
+		servInfo.userInfo.channels = servInfo.channels;
 		this.user = new UserInfo(servInfo.userInfo) || throw 'User info is required.';
 		this.name = servInfo.name || throw 'Server name is required.';
 		this.host = servInfo.host || throw 'Server hostname is required.';
 		this.port = servInfo.port || throw 'Server port is required.';
 		this.tls = this.isTLS(servInfo.tls);
 		this.pass = servInfo.pass || null;
-		// TODO: Find a way to save channels between sessions
-		this.channelNames = servInfo.channels || [];
 		this.encoding = servInfo.encoding || 'utf8';
 		this.nsIdent = servInfo.nsIdent;
 		// TODO: Secure the password! It's passed to extensions!
 		this.nsPass = servInfo.nsPass;
+
+		this.channels = {}; // ChannelInfo objects
+		this.users = {}; // UserInfo objects
 
 		// TODO: Add SASL info and work towards supporting it
 	}

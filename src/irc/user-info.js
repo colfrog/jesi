@@ -11,7 +11,7 @@ export default class UserInfo {
 		this.ident = user.ident || throw 'The user identity is required.';
 		// TODO: Support a list for the nick
 		this.nick = user.nick || throw 'The nickname is required.';
-
-		// TODO: extend so that it can represent any user on IRC
+		// TODO: Find a way to save channels between sessions
+		this.channelNames = user.channels || [];
 	}
 }
