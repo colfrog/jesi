@@ -18,7 +18,7 @@ export default class IRCWriter {
 		if (typeof args === 'string' && args.length > 0)
 			return this.sendRaw(command + ' :' + args);
 		if (typeof args !== 'object')
-			return 'Invalid command arguments passed to IRCWriter.sendCommand';
+			throw 'Invalid command arguments passed to IRCWriter.sendCommand';
 
 		let msg = command;
 		for (let i = 0; i < args.length; i++) {
