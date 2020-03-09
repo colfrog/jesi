@@ -112,6 +112,7 @@ export default class Server {
 			});
 		}
 
+		socket.setNoDelay(true);
 		socket.setEncoding(this.info.encoding);
 		socket.on('data', this._onSocketData.bind(this));
 		socket.on('connect', this._onSocketConnected.bind(this));
