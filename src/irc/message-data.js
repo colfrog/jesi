@@ -86,7 +86,7 @@ export default class MessageData {
 			tagValue = tagValue.splice(1);
 
 		const tag = new IRC3Tag({
-			tag: tagAndKey[0],
+			tag: tagValue,
 			vendor: vendorAndKeyName[0],
 			keyName: vendorAndKeyName[1],
 			isClient: isClient

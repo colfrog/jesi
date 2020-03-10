@@ -1,5 +1,6 @@
 import UserInfo from './user-info';
 
+// TODO: The info and data classes are going to define the protocol, separate from irc
 export default class ServerInfo {
 	/*
 	 * TODO: Make globally configurable defaults
@@ -26,16 +27,17 @@ export default class ServerInfo {
 		this.tls = this.isTLS(servInfo.tls);
 		this.pass = servInfo.pass || null;
 		this.encoding = servInfo.encoding || 'utf8';
+		// TODO: Replace NickServ module with its own object
 		this.nsIdent = servInfo.nsIdent;
 		// TODO: Secure the password! It's passed to extensions!
 		this.nsPass = servInfo.nsPass;
+		// TODO: Add SASL information and work towards supporting it
 
 		this.channels = {}; // ChannelInfo objects
 		this.users = {}; // UserInfo objects
-
-		// TODO: Add SASL info and work towards supporting it
 	}
 
+	// TODO: Extend with SASL when it's added
 	willRegister() {
 		return this.nsIdent && this.nsPass;
 	}
