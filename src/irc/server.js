@@ -3,8 +3,8 @@ import tls from 'tls';
 import regeneratorRuntime from 'regenerator-runtime';
 
 import Hooks from './hooks';
-import MessageData from './message-data';
-import ServerInfo from './server-info';
+import MessageData from '../proto/message-data';
+import ServerInfo from '../proto/server-info';
 import IRCWriter from './irc-writer';
 
 export default class Server {

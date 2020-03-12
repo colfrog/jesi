@@ -1,6 +1,5 @@
 import UserInfo from './user-info';
 
-// TODO: The info and data classes are going to define the protocol, separate from irc
 export default class ServerInfo {
 	/*
 	 * TODO: Make globally configurable defaults
