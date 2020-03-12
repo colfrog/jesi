@@ -12,6 +12,8 @@ export default class UserInfo {
 		// TODO: Support a list for the nick
 		this.nick = user.nick || throw 'The nickname is required.';
 		// TODO: Find a way to save channels between sessions
-		this.channelNames = user.channels || [];
+		// This object takes a channel as key and a modestring as value
+		this.channels = {}
+		user.channels.forEach((channel) => this.channels[channel] = '');
 	}
 }
