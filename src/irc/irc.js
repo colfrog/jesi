@@ -1,27 +1,27 @@
-import Server from './server';
+import Client from './client';
 
 export default class IRC {
 	constructor() {
-		this.servers = {};
+		this.clients = {};
 	}
 
 	addServer(servInfo) {
-		this.servers[servInfo.name] = new Server(servInfo);
+		this.clients[servInfo.name] = new Client(servInfo);
 	}
 
 	getServer(name) {
-		return this.servers[name] || null;
+		return this.clients[name] || null;
 	}
 
 	removeServer(name) {
-		this.servers[name].close();
-		delete this.servers[name];
+		this.clients[name].close();
+		delete this.clients[name];
 	}
 
 	on(command, callback) {
-		// TODO: Add hook to even future servers
-		this.servers.keys().forEach((name) => {
-			this.servers[name].on(command, callback);
+		// TODO: Add hook to even future clients
+		this.clients.keys().forEach((name) => {
+			this.clients[name].on(command, callback);
 		});
 	}
 }

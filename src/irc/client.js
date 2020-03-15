@@ -7,7 +7,7 @@ import MessageData from '../proto/message-data';
 import ServerInfo from '../proto/server-info';
 import IRCWriter from './irc-writer';
 
-export default class Server {
+export default class Client {
 	constructor(info) {
 		this.connected = false;
 		this.info = new ServerInfo(info);
@@ -40,7 +40,7 @@ export default class Server {
 	}
 
 	async write(data) {
-		// Data is not checked for correctness because Server.write
+		// Data is not checked for correctness because Client.write
 		// should not be used outside of IRCWriter.
 		this._socket.write(data, this.info.encoding, () => {
 			console.log(this.info.name + ' <-- ' + data.trim());
