@@ -6,7 +6,7 @@ export default class Hooks {
 		this._closingKey = '%CLOSING%';
 
 		// Do post-init hooks when the server sends 001
-		this.add('001', this._doPostInit.bind(this));
+		this.add('001', this.runPostInit.bind(this));
 	}
 
 	add(command, func) {
@@ -70,9 +70,5 @@ export default class Hooks {
 	_run(command, server, msgData) {
 		if (this._hooks[command])
 			this._hooks[command].forEach(async (f) => f(server, msgData));
-	}
-
-	_doPostInit(server) {
-		this.runPostInitHooks(server);
 	}
 }

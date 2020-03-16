@@ -42,16 +42,19 @@ export default class MessageData {
 	}
 
 	parse() {
+		if (!this.raw || this.raw.length === 0)
+			return;
+
 		const words = this.raw
 			.trim()
 			.split(' ')
 			.filter(this.isWordValid);
 
 		let cmdIndex = this.getCommandIndex(words);
-		this.parsePrefix(words, cmdIndex),
-		this.parseTags(words, cmdIndex),
-		this.parseCommand(words, cmdIndex),
-		this.parseParamsAndTail(words, cmdIndex)
+		this._parsePrefix(words, cmdIndex),
+		this._parseTags(words, cmdIndex),
+		this._parseCommand(words, cmdIndex),
+		this._parseParamsAndTail(words, cmdIndex)
 
 		if ((typeof this.command === 'string' &&
 		     typeof this.params === 'object' &&
@@ -62,7 +65,7 @@ export default class MessageData {
 			this.valid = true;
 	}
 
-	parsePrefix(words, cmdIndex) {
+	_parsePrefix(words, cmdIndex) {
 		if (cmdIndex > 0)
 			this.prefix = words[cmdIndex - 1].slice(1);
 
@@ -77,7 +80,7 @@ export default class MessageData {
 		}
 	}
 
-	parseTag(rawTag) {
+	_parseTag(rawTag) {
 		const isClient = rawTag[0] === '+';
 		const tagAndKey = rawTag.split('=');
 		const vendorAndKeyName = tagAndKey.split('/');
@@ -94,7 +97,7 @@ export default class MessageData {
 		this.tags[tagValue] = tag;
 	}
 
-	parseTags(words, cmdIndex) {
+	_parseTags(words, cmdIndex) {
 		if (cmdIndex > 1)
 			var rawTags = words[cmdIndex - 2];
 		else
@@ -104,16 +107,19 @@ export default class MessageData {
 			return;
 
 		tagList = rawTags.slice(1).split(';');
-		tagList.forEach(parseTag);
+		tagList.forEach(this._parseTag);
 	}
 
-	parseCommand(words, index) {
+	_parseCommand(words, index) {
 		this.command = words[index];
 	}
 
-	parseParamsAndTail(words, cmdIndex) {
-		for (var i = cmdIndex + 1; i < words.length && words[i][0] != ':'; i++)
+	_parseParamsAndTail(words, cmdIndex) {
+		for (var i = cmdIndex + 1; i < words.length && words[i][0] !== ':'; i++)
 			this.params.push(words[i]);
+
+		if (!words[i] || words[i][0] !== ':')
+			return;
 
 		let raw = this.raw;
 		let tail = raw.slice(raw.indexOf(words[i]) + 1).trim();

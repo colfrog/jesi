@@ -68,7 +68,7 @@ export default class Module {
 			addHook: this.hooks.add.bind(this.hooks),
 			delHook: this.hooks.del.bind(this.hooks),
 			addCommand: this.commands.add.bind(this.commands),
-			delCommand: this.commands.del.bind(this.commands)
+			delCommand: this.commands.del.bind(this.commands),
 		};
 
 		return vm.createContext(context);

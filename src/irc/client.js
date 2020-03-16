@@ -63,6 +63,7 @@ export default class Client {
 	async _onSocketConnected() {
 		this.connected = true;
 		console.log('Connected to ' + this.info.name);
+		this.info.enableTracking(this);
 		this.hooks.runPreInit(this);
 	}
 
@@ -100,7 +101,7 @@ export default class Client {
 
 		var socket = net.connect({
 			host: this.info.host,
-			port: this.info.port
+			port: this.info.port,
 		});
 
 		if (this.info.tls) {
@@ -108,7 +109,7 @@ export default class Client {
 			socket = tls.connect({
 				host: this.info.host,
 				port: this.info.port,
-				socket: socket
+				socket: socket,
 			});
 		}
 
