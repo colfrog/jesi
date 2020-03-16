@@ -1,7 +1,7 @@
 import fs from 'fs';
 
-import ServerInfo from './irc/server-info';
-import UserInfo from './irc/user-info';
+import ServerInfo from './proto/server-info';
+import UserInfo from './proto/user-info';
 import IRC from './irc/irc';
 
 import ModulesHandler from './modules/modules-handler';
