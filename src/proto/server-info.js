@@ -32,18 +32,36 @@ export default class ServerInfo {
 		this.nsPass = servInfo.nsPass;
 		// TODO: Add SASL information and work towards supporting it
 
+		this.tracking = false;
 		this.client = null;
 		this.channels = {}; // ChannelInfo objects
 		this.users = {}; // UserInfo objects
 	}
 
 	initTracking(client) {
+		if (this._tracking)
+			return;
+
 		this.client = client || throw 'ServerInfo.initTracking called with invalid server';
+		this.tracking = true;
+
+		var elems = Object.values(this.channels) + Object.values(this.users);
+		elems.forEach(elem => {
+			elem.initTracking(client);
+		});
 	}
 
-	stopTracking(client) {
-		if (client === this.client)
-			this.client = null;
+	stopTracking() {
+		if (!this._tracking)
+			return;
+
+		this.client = null;
+		this.tracking = false;
+
+		var elems = Object.values(this.channels) + Object.values(this.users);
+		elems.forEach(elem => {
+			elem.stopTracking(client);
+		});
 	}
 
 	willRegister() {

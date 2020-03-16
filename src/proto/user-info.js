@@ -11,9 +11,18 @@ export default class UserInfo {
 		this.ident = user.ident || throw 'The user identity is required.';
 		// TODO: Support a list for the nick
 		this.nick = user.nick || throw 'The nickname is required.';
+
 		// TODO: Find a way to save channels between sessions
 		// This object takes a channel as key and a modestring as value
 		this.channels = {}
 		user.channels.forEach((channel) => this.channels[channel] = '');
+
+		this._client = null;
+	}
+
+	initTracking(client) {
+	}
+
+	stopTracking() {
 	}
 }
