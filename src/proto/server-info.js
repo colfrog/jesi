@@ -140,10 +140,10 @@ export default class ServerInfo {
 
 	_uinfoFromMsgData(msgData) {
 		return new UserInfo({
-			realname: 'foo', // We don't know it yet
 			ident: msgData.ident,
 			nick: msgData.nick,
 			host: msgData.host,
+			// We don't know the realname yet
 		});
 	}
 
@@ -167,6 +167,8 @@ export default class ServerInfo {
 					modes = modes.filter(mode => mode !== c);
 			}
 		}
+
+		return modes;
 	}
 
 	_changeModes(nick, channel, changes) {
@@ -178,8 +180,6 @@ export default class ServerInfo {
 		// Make sure the user exists
 		if (typeof this.users[nick] !== 'string') {
 			this.users[nick] = new UserInfo({
-				realname: 'foo',
-				ident: 'foo',
 				nick: nick,
 			});
 		}
@@ -322,10 +322,8 @@ export default class ServerInfo {
 		// Replace the old entry in every channel
 		Object.keys(this.channels).forEach((chan) => {
 			let modeString = this.channels[chan].users[nick] || '';
-			if (typeof modeString === 'string') {
-				this.channels[chan].users[newNick] = modeString;
-				delete this.channels[chan].users[nick];
-			}
+			this.channels[chan].users[newNick] = modeString;
+			delete this.channels[chan].users[nick];
 		});
 	}
 
@@ -338,23 +336,11 @@ export default class ServerInfo {
 
 		if (!(this.users[target] instanceof UserInfo)) {
 			this.users[target] = new UserInfo({
-				ident: 'foo',
-				realname: 'foo',
 				nick: target,
 			});
 		}
 
-		if (target === chan)
-			this._changeModes(target, chan, changes);
-		else {
-			this._getModes(changes);
-			this.user.modes = this.user.modes
-				.split('')
-				.concat(this._getModes(changes))
-				.filter((elem, index, self) => self.indexOf(elem) === index)
-				.sort()
-				.join('');
-		}
+		this._changeModes(target, chan, changes);
 	}
 
 	_onWho(client, msgData) {
