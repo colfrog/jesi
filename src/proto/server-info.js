@@ -150,8 +150,8 @@ export default class ServerInfo {
 	_getModes(changes) {
 		let modes = [];
 		let addSwitch = false;
-		for (let i = 0; i < modes.length; i++) {
-			let c = modes[i];
+		for (let i = 0; i < changes.length; i++) {
+			let c = changes[i];
 			switch (c) {
 			case '+':
 				addSwitch = true;
@@ -172,13 +172,19 @@ export default class ServerInfo {
 	}
 
 	_changeModes(nick, channel, changes) {
+		var modes;
+		// Some other user in a channel
 		if (this.users[nick] && typeof this.users[nick].channels[channel] === 'string')
-			var modes = this.users[nick].channels[channel].split('');
+			modes = this.users[nick].channels[channel].split('');
+		// Us
+		else if (nick === channel)
+			modes = this.user.modes.split('');
+		// Untracked user
 		else
-			var modes = [];
+			modes = [];
 
 		// Make sure the user exists
-		if (typeof this.users[nick] !== 'string') {
+		if (!(this.users[nick] instanceof UserInfo)) {
 			this.users[nick] = new UserInfo({
 				nick: nick,
 			});
@@ -195,8 +201,12 @@ export default class ServerInfo {
 			.sort()
 			.join('');
 
-		this.users[nick].channels[channel] = modeString;
-		this.channels[channel].users[nick] = modeString;
+		if (nick === channel) {
+			this.user.modes = modeString;
+		} else {
+			this.users[nick].channels[channel] = modeString;
+			this.channels[channel].users[nick] = modeString;
+		}
 	}
 
 	_parseStatus(nick, channel, status) {

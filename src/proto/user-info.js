@@ -29,6 +29,9 @@ export default class UserInfo {
 	}
 
 	update(user) {
+		if (!user)
+			return;
+
 		this.realname = user.realname || this.realname;
 		this.ident = user.ident || this.ident;
 		this.nick = user.nick || this.nick;
