@@ -34,7 +34,7 @@ export default class Client {
 
 	close() {
 		if (this.connected) {
-			this.hooks.runClosingHooks(this);
+			this.hooks.runClosing(this);
 			this._socket.destroy();
 		}
 	}
@@ -52,7 +52,7 @@ export default class Client {
 		let msgData = new MessageData(msg);
 		msgData.parse();
 		if (msgData.valid)
-			this.hooks.runHooks(this, msgData);
+			this.hooks.runCommand(this, msgData);
 	}
 
 	async _onSocketData(data) {
@@ -63,7 +63,7 @@ export default class Client {
 	async _onSocketConnected() {
 		this.connected = true;
 		console.log('Connected to ' + this.info.name);
-		this.hooks.runPreInitHooks(this);
+		this.hooks.runPreInit(this);
 	}
 
 	async _onSocketError(error) {
@@ -82,7 +82,7 @@ export default class Client {
 	async _onSocketEnd() {
 		console.log('Disconnected from ' + this.info.name +
 			'. Attempting to reconnect...');
-		this.hooks.runClosingHooks(this);
+		this.hooks.runClosing(this);
 		this._socket = this._makeSocket();
 	}
 

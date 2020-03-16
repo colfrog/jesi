@@ -29,27 +29,45 @@ export default class Hooks {
 		this.add(this._closingKey, func);
 	}
 
-	runPreInitHooks(server) {
+	remove(command, func) {
+		let hook = this._hooks[command];
+		if (typeof hook === 'object' && typeof hook.filter === 'function')
+			this._hooks[command] = hook.filter(elem => elem !== func);
+	}
+
+	removePreInit(func) {
+		this.remove(this._preInitKey, func);
+	}
+
+	removePostInit(func) {
+		this.remove(this._postInitKey, func);
+	}
+
+	removeClosing(func) {
+		this.remove(this._closingKey, func);
+	}
+
+	runCommand(server, msgData) {
+		this._run('*', server, msgData);
+		this._run(msgData.command, server, msgData);
+	}
+
+	runPreInit(server) {
 		console.log('Running pre-init hooks for ' + server.info.name + '.');
-		this._runHook(this._preInitKey, server, null);
+		this._run(this._preInitKey, server, null);
 	}
 
-	runPostInitHooks(server) {
+	runPostInit(server) {
 		console.log('Running post-init hooks for ' + server.info.name + '.');
-		this._runHook(this._postInitKey, server, null);
+		this._run(this._postInitKey, server, null);
 	}
 
-	runClosingHooks(server) {
+	runClosing(server) {
 		console.log('Running closing hooks for ' + server.info.name + '.');
-		this._runHook(this._closingKey, server, null);
+		this._run(this._closingKey, server, null);
 	}
 
-	runHooks(server, msgData) {
-		this._runHook('*', server, msgData);
-		this._runHook(msgData.command, server, msgData);
-	}
-
-	_runHook(command, server, msgData) {
+	_run(command, server, msgData) {
 		if (this._hooks[command])
 			this._hooks[command].forEach(async (f) => f(server, msgData));
 	}
