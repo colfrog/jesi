@@ -147,9 +147,9 @@ export default class ServerInfo {
 		});
 	}
 
-	_getModes(changes) {
-		let modes = [];
+	_getModes(modes, changes) {
 		let addSwitch = false;
+
 		for (let i = 0; i < changes.length; i++) {
 			let c = changes[i];
 			switch (c) {
@@ -160,11 +160,13 @@ export default class ServerInfo {
 				addSwitch = false;
 				break;
 			default:
-				if (addSwitch)
-					if (!modes.includes(c))
+				if (addSwitch) {
+					if (!modes.includes(c)) {
 						modes.push(c);
-				else
+					}
+				} else {
 					modes = modes.filter(mode => mode !== c);
+				}
 			}
 		}
 
@@ -195,8 +197,7 @@ export default class ServerInfo {
 			this.channels[channel] = new ChannelInfo(channel);
 
 		// Parse the changes, add to modes, handle duplicates
-		let modeString = modes
-			.concat(this._getModes(changes))
+		let modeString = this._getModes(modes, changes)
 			.filter((elem, index, self) => self.indexOf(elem) === index)
 			.sort()
 			.join('');

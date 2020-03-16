@@ -81,6 +81,10 @@ export default class Module {
 	}
 
 	async run(code, msgData) {
+		// Update serverInfo before executing
+		if (this.perms.hasServerInfo)
+			this.context.serverInfo = this.server.info;
+
 		// TODO: Handle code errors gracefully
 		// TODO: Find a better way of passing msgData, this is evil
 		vm.runInContext(code + '(' + JSON.stringify(msgData) + ')',

@@ -24,6 +24,15 @@
 				"hasServerInfo": true,
 				"hasIRCWriter": true
 			}
+		},
+		{
+			"name": "modes",
+			"description": "Channel mode shower",
+			"path": "./modules/modes.js",
+			"permissions": {
+				"hasServerInfo": true,
+				"hasIRCWriter": true
+			}
 		}
 	]
 }
