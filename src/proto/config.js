@@ -8,17 +8,16 @@ export default class Config {
     this.modules = this.config.modules
     this.servers = this.config.servers
 
-    this._initDefaults()
+    this._mergeDefaults()
   }
 
-  _initDefaults () {
+  _mergeDefaults () {
     this.defaults = this.config.defaults || { }
 
-    this.servers.forEach((server) => {
-      const defaultUserInfo = this.defaults.userInfo
+    const defaultUserInfo = this.defaults.userInfo
 
-      server.userInfo = Object.assign({ }, defaultUserInfo, server.userInfo)
-    })
+    this.servers.forEach(server =>
+      server.userInfo = Object.assign({ }, defaultUserInfo, server.userInfo))
   }
 }
 
