@@ -93,15 +93,15 @@ export default class Module {
 
 	async init(server) {
 		// TODO: Add checks before fs.readFile
-    const data = await fs.promises.readFile (this.path);
+		const data = await fs.promises.readFile (this.path);
 
-    // TODO: Add sanity and error-handling
-    this.context = this.buildContext(server);
-    return vm.runInContext(data, this.context, this._contextOptions);
+		// TODO: Add sanity and error-handling
+		this.context = this.buildContext(server);
+		return vm.runInContext(data, this.context, this._contextOptions);
 	}
 
 	async refresh() {
-    const data = await fs.promises.readFile (this.path);
+		const data = await fs.promises.readFile (this.path);
 
 		return vm.runInContext(data, this.context, this._contextOptions);
 	}
