@@ -87,29 +87,23 @@ export default class Module {
 
 		// TODO: Handle code errors gracefully
 		// TODO: Find a better way of passing msgData, this is evil
-		vm.runInContext(code + '(' + JSON.stringify(msgData) + ')',
+		return vm.runInContext(code + '(' + JSON.stringify(msgData) + ')',
 			this.context, this._contextOptions);
 	}
 
 	async init(server) {
 		// TODO: Add checks before fs.readFile
-		fs.readFile(this.path, (err, data) => {
-			if (err !== null)
-				throw err;
+    const data = await fs.promises.readFile (this.path);
 
-			// TODO: Add sanity and error-handling
-			this.context = this.buildContext(server);
-			vm.runInContext(data, this.context, this._contextOptions);
-		});
+    // TODO: Add sanity and error-handling
+    this.context = this.buildContext(server);
+    return vm.runInContext(data, this.context, this._contextOptions);
 	}
 
 	async refresh() {
-		fs.readFile(this.path, (err, data) => {
-			if (err !== null)
-				throw err;
+    const data = await fs.promises.readFile (this.path);
 
-			vm.runInContext(data, this.context, this._contextOptions);
-		});
+		return vm.runInContext(data, this.context, this._contextOptions);
 	}
 
 	addPreInit(code) {
