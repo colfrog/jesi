@@ -9,13 +9,13 @@ import ModulesHandler from './modules/modules-handler';
 
 // Parse userInfo and servInfo from config.json
 const config = new Config(),
-  client = new IRC(),
-  { servers, commandPrefix, modules } =  config
+	client = new IRC(),
+	{ servers, commandPrefix, modules } =  config
 ;
 
 servers.forEach(servInfo => {
-  const server = client.addServer(servInfo);
-  const modsHandler = new ModulesHandler(server, commandPrefix, modules);
+	const server = client.addServer(servInfo);
+	const modsHandler = new ModulesHandler(server, commandPrefix, modules);
 
-  server.connect();
+	server.connect();
 });
