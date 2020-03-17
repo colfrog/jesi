@@ -1,5 +1,12 @@
 {
 	"commandPrefix": "%",
+	"defaults": {
+		"userInfo": {
+			"realname": "Jessie Jane",
+			"ident": "jesi",
+			"nick": "jesi"
+		}
+	},
 	"servers": [
 		{
 			"name": "Snoonet",
