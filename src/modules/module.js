@@ -4,6 +4,7 @@ import vm from 'vm';
 import ModulePermissions from './module-permissions';
 import HookHandler from './hook-handler';
 import CommandHandler from './command-handler';
+import MatchHandler from './match-handler';
 import UserInfo from '../proto/user-info';
 import { hasAtLeast } from '../proto/mode-parsing';
 
@@ -33,6 +34,7 @@ export default class Module {
 		this.closing = [];
 		this.hooks = new HookHandler(this);
 		this.commands = new CommandHandler(this);
+		this.matches = new MatchHandler(this);
 
 		this.context = {};
 		this._contextOptions = {
@@ -71,6 +73,7 @@ export default class Module {
 			delHook: this.hooks.del.bind(this.hooks),
 			addCommand: this.commands.add.bind(this.commands),
 			delCommand: this.commands.del.bind(this.commands),
+			addMatch: this.matches.add.bind(this.matches),
 		};
 
 		return vm.createContext(context);
@@ -78,8 +81,11 @@ export default class Module {
 
 	handleMessage(msgData) {
 		this.hooks.run(msgData);
-		if (msgData.command === 'PRIVMSG')
+
+		if (msgData.command === 'PRIVMSG') {
 			this.commands.run(msgData);
+			this.matches.run(msgData);
+		}
 	}
 
 	async run(code, msgData) {

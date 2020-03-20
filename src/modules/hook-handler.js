@@ -22,7 +22,7 @@ export default class HookHandler {
 	}
 
 	del(command, code) {
-		let commands = this.hooks.keys();
+		let commands = Object.keys(this.hooks);
 		for (let i = 0; i < commands.length; i++) {
 			let snippets = this.hooks[commands[i]];
 			for (let j = 0; j < snippets.length; j++)

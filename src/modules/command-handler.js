@@ -28,7 +28,7 @@ export default class CommandHandler {
 	}
 
 	del(command, code) {
-		let commands = this.commands.keys();
+		let commands = Object.keys(this.commands);
 		if (!commands)
 			return;
 

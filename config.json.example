@@ -37,6 +37,14 @@
 				"hasServerInfo": true,
 				"hasIRCWriter": true
 			}
+		}, {
+			"name": "cheer",
+			"description": "Cheer on \\o/",
+			"path": "./modules/cheer.js",
+			"permissions": {
+				"hasServerInfo": true,
+				"hasIRCWriter": true
+			}
 		}
 	]
 }
