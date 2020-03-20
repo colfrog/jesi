@@ -1,30 +1,65 @@
 function doNotice(msgData) {
-	if (msgData.tailWords.length !== 2)
+	if (msgData.tailWords.length < 2)
 		return;
 
-	let who = msgData.tailWords[1];
-	if (who === 'me')
-		who = msgData.nick;
-	else
-		ircWriter.sendNotice(msgData.nick, who + ' was noticed.');
-
 	const response = 'You are beautiful and you deserve to be loved.';
-	ircWriter.sendNotice(who, response);
+	let who = msgData.tailWords[1].toLowerCase();
+	let chan = msgData.params[0];
+	let nick = msgData.nick;
+	switch (who) {
+	case 'everyone':
+		if (!serverInfo.users[nick].channels[chan].includes('o'))
+			return;
+
+		Object.keys(serverInfo.channels[chan].users).forEach(user => {
+			ircWriter.sendNotice(user, response);
+		});
+		ircWriter.sendNotice(nick, 'Everyone was noticed.');
+		break;
+
+	case 'me':
+		ircWriter.sendNotice(nick, response);
+		break;
+
+	default:
+		ircWriter.sendNotice(who, response);
+		ircWriter.sendNotice(nick, who + ' was noticed.');
+		break;
+	}
+}
+
+// please join #gnulag
+function doPlease(msgData) {
+	if (msgData.tailWords.length < 3)
+		return;
+
+	let channels = msgData.tailWords.slice(2).join().split(',');
+
+	switch (msgData.tailWords[1].toLowerCase()) {
+	case 'join':
+		channels = channels.join(',');
+		ircWriter.sendCommand('JOIN', channels);
+
+		break;
+
+	case 'leave':
+		channels.forEach(channel =>
+			ircWriter.sendCommand('PART', channel)
+		);
+
+		break;
+
+	default:
+		return;
+	}
 }
 
 function doLeave(msgData) {
-	if (msgData.tailWords.length !== 2)
-		return;
-
 	let channel = msgData.params[0];
 	let who = msgData.tailWords[1];
 
-	if (who.toLowerCase() === serverInfo.user.nick.toLowerCase()) {
-		ircWriter.sendAction(channel, 'cries');
-		ircWriter.partFrom(channel, ':(');
-	} else {
-		ircWriter.sendMessage(channel, 'I refuse!');
-	}
+	ircWriter.sendAction(channel, 'cries');
+	ircWriter.partFrom(channel, 'why does ' + who + ' hate me :(');
 }
 
 var blamLocked = false;
@@ -55,16 +90,20 @@ function doBlam(msgData) {
 function doEcho(msgData) {
 	let match = msgData.tail.match(/echo\s(.+)$/);
 	let channel = msgData.params[0];
-	if (match !== null && match[1][0].trim() !== '!')
-		ircWriter.sendMessage(channel, match[1]);
+	let who = msgData.nick;
+	if (match !== null)
+		ircWriter.sendMessage(channel, who + ': ' + match[1]);
 }
 
 function doAct(msgData) {
 	let channel = msgData.params[0];
-	ircWriter.sendAction(channel, 'acts');
+	ircWriter.sendMessage(channel, 'They say the neon lights are bright, on Broadway!');
+	ircWriter.sendAction(channel, 'does a Broadway dance');
 }
 
 addCommand('notice', 'doNotice');
+addCommand('please,', 'doPlease');
+addCommand('please', 'doPlease');
 addCommand('leave,', 'doLeave');
 addCommand('blam', 'doBlam');
 addCommand('echo', 'doEcho');
