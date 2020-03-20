@@ -2,7 +2,12 @@ function doNotice(msgData) {
 	if (msgData.tailWords.length !== 2)
 		return;
 
-	const who = msgData.tailWords[1];
+	let who = msgData.tailWords[1];
+	if (who === 'me')
+		who = msgData.nick;
+	else
+		ircWriter.sendNotice(msgData.nick, who + ' was noticed.');
+
 	const response = 'You are beautiful and you deserve to be loved.';
 	ircWriter.sendNotice(who, response);
 }
