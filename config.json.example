@@ -14,12 +14,7 @@
 			"port": 6697,
 			"channels": ["#jesi", "#jesi-dev"],
 			"nsIdent": "Your NickServ identity",
-			"nsPass": "Your NickServ password",
-			"userInfo": {
-				"realname": "Jessie Jane",
-				"ident": "jesi",
-				"nick": "jesi"
-			}
+			"nsPass": "Your NickServ password"
 		}
 	],
 	"modules": [
@@ -31,10 +26,9 @@
 				"hasServerInfo": true,
 				"hasIRCWriter": true
 			}
-		},
-		{
+		}, {
 			"name": "modes",
-			"description": "Channel mode shower",
+			"description": "Channel mode echo",
 			"path": "./modules/modes.js",
 			"permissions": {
 				"hasServerInfo": true,
