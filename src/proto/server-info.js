@@ -11,8 +11,9 @@ export default class ServerInfo {
 	 * port: The server's port (required)
 	 * pass: The server's password (default to null)
 	 * tls: Whether to use TLS (default to true, but depends on the port)
-	 * channels: The channels to join (default to [])
 	 * encoding: The server's supported encoding (default to 'utf8')
+	 * channels: The channels to join (default to [])
+	 * channelRestrictions: Channels and their minimum mode (default to {})
 	 * nsIdent: Your NickServ identity, unused if undefined
 	 * nsPass: Your NickServ password, unused if undefined
 	 */
@@ -27,6 +28,7 @@ export default class ServerInfo {
 		this.tls = this.isTLS(servInfo.tls);
 		this.pass = servInfo.pass || null;
 		this.encoding = servInfo.encoding || 'utf8';
+		this.channelRestrictions = servInfo.channelRestrictions || {};
 		// TODO: Replace NickServ module with its own object
 		this.nsIdent = servInfo.nsIdent;
 		// TODO: Secure the password! It's passed to extensions!
@@ -173,6 +175,7 @@ export default class ServerInfo {
 		return modes;
 	}
 
+	// TODO: Create a helper class to parse modes
 	_changeModes(nick, channel, changes) {
 		var modes;
 		// Some other user in a channel
@@ -228,16 +231,23 @@ export default class ServerInfo {
 			// The following are in order of power,
 			// they inherit from the ones below.
 			case '!': // Oper on official business
+				modes.push('Y');
+				break;
 			case '~':
 				modes.push('q');
+				break;
 			case '&':
 				modes.push('a');
+				break;
 			case '@':
 				modes.push('o');
+				break;
 			case '%':
 				modes.push('h');
+				break;
 			case '+':
 				modes.push('v');
+				break;
 			}
 		});
 

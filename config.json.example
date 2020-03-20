@@ -13,6 +13,9 @@
 			"host": "irc.snoonet.org",
 			"port": 6697,
 			"channels": ["#jesi", "#jesi-dev"],
+			"channelRestrictions": {
+				"#jesi-dev": "v"
+			},
 			"nsIdent": "Your NickServ identity",
 			"nsPass": "Your NickServ password"
 		}

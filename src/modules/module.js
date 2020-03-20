@@ -4,6 +4,8 @@ import vm from 'vm';
 import ModulePermissions from './module-permissions';
 import HookHandler from './hook-handler';
 import CommandHandler from './command-handler';
+import UserInfo from '../proto/user-info';
+import { hasAtLeast } from '../proto/mode-parsing';
 
 // TODO: extend to support webassembly
 export default class Module {
@@ -84,6 +86,19 @@ export default class Module {
 		// Update serverInfo before executing
 		if (this.perms.hasServerInfo)
 			this.context.serverInfo = this.server.info;
+
+		// Check the user's privilege on PRIVMSG
+		if (msgData && msgData.command === 'PRIVMSG') {
+			let channel = msgData.params[0];
+			let mode = this.server.info.channelRestrictions[channel];
+			let user = this.server.info.users[msgData.nick];
+
+			if (mode && user instanceof UserInfo) {
+				let modeString = user.channels[channel];
+				if (!hasAtLeast(modeString, mode))
+					return;
+			}
+		}
 
 		// TODO: Handle code errors gracefully
 		// TODO: Find a better way of passing msgData, this is evil
