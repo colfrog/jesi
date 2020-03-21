@@ -7,27 +7,24 @@ export default class MatchHandler {
 	run(msgData) {
 		let text = msgData.tail;
 		Object.keys(this.patterns).forEach(pattern => {
-			console.log(pattern);
-			console.log(text);
-			let match = pattern.match(text);
-			console.log(match);
-			if (match) {
-				this.patterns[pattern].forEach(code => {
-					this.module.run(code, msgData);
-				});
-			}
+			let regex = this.patterns[pattern][0];
+			let code = this.patterns[pattern][1];
+			let match = text.match(regex);
+			if (match)
+				this.module.run(code, msgData);
 		});
 	}
 
-	add(pattern, code, compileOptions) {
-		const re = new RegExp(pattern, compileOptions);
-		if (this.patterns[re])
-			this.patterns[re].push(code);
-		else
-			this.patterns[re] = [code];
+	add(pattern, code) {
+		// We use a pair so that we don't have to convert
+		// compiled regex to strings
+		const pair = [pattern, code];
+		// TODO: Stop assuming that two regex will never be the same.
+		this.patterns[pattern] = pair;
 	}
 
 	del(pattern, code) {
-		// TODO: A more complex structure is needed if we want to delete entries
+		if (this.patterns[pattern])
+			delete this.patterns[pattern];
 	}
 }

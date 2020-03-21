@@ -15,4 +15,4 @@ function doCheer(msgData) {
 	ircWriter.sendMessage(msgData.params[0], cheers[index]);
 }
 
-addMatch(/\\o\//g, 'doCheer');
+addMatch(/\\o\//, 'doCheer');
