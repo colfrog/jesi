@@ -11,6 +11,7 @@ export default class MatchHandler {
 			let code = this.patterns[pattern][1];
 			let match = text.match(regex);
 			if (match)
+				// TODO: Handle captures
 				this.module.run(code, msgData);
 		});
 	}
