@@ -8,7 +8,7 @@ function doNotice(msgData) {
 	let nick = msgData.nick;
 	switch (who) {
 	case 'everyone':
-		if (!serverInfo.users[nick].channels[chan].includes('o'))
+		if (chan[0] === '#' && !serverInfo.users[nick].channels[chan].includes('o'))
 			return;
 
 		Object.keys(serverInfo.channels[chan].users).forEach(user => {
@@ -55,11 +55,8 @@ function doPlease(msgData) {
 }
 
 function doLeave(msgData) {
-	let channel = msgData.params[0];
-	let who = msgData.tailWords[1];
-
-	ircWriter.sendAction(channel, 'cries');
-	ircWriter.partFrom(channel, 'why does ' + who + ' hate me :(');
+	ircWriter.sendAction(msgData.replyTarget, 'cries');
+	ircWriter.partFrom(channel, 'why does ' + msgData.nick + ' hate me :(');
 }
 
 var blamLocked = false;
@@ -89,16 +86,14 @@ function doBlam(msgData) {
 
 function doEcho(msgData) {
 	let match = msgData.tail.match(/echo\s(.+)$/);
-	let channel = msgData.params[0];
 	let who = msgData.nick;
 	if (match !== null)
-		ircWriter.sendMessage(channel, who + ': ' + match[1]);
+		ircWriter.sendMessage(msgData.replyTarget, who + ': ' + match[1]);
 }
 
 function doAct(msgData) {
-	let channel = msgData.params[0];
-	ircWriter.sendMessage(channel, 'They say the neon lights are bright, on Broadway!');
-	ircWriter.sendAction(channel, 'does a Broadway dance');
+	ircWriter.sendMessage(msgData.replyTarget, 'They say the neon lights are bright, on Broadway!');
+	ircWriter.sendAction(msgData.replyTarget, 'does a Broadway dance');
 }
 
 addCommand('notice', 'doNotice');

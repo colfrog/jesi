@@ -12,7 +12,7 @@ let cheers = [
 
 function doCheer(msgData) {
 	let index = Math.floor(Math.random()*cheers.length);
-	ircWriter.sendMessage(msgData.params[0], cheers[index]);
+	ircWriter.sendMessage(msgData.replyTarget, cheers[index]);
 }
 
 addMatch(/\\o\//, 'doCheer');

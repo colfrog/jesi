@@ -14,8 +14,7 @@ function doChoose(msgData) {
 		choices;
 
 	let index = Math.floor(Math.random() * choices.length);
-	let chan = msgData.params[0];
-	ircWriter.sendMessage(chan, msgData.nick + ': ' + choices[index]);
+	ircWriter.sendMessage(msgData.replyTarget, msgData.nick + ': ' + choices[index]);
 }
 
 addCommand('choose', 'doChoose');

@@ -25,6 +25,8 @@ export default class MessageData {
 		this.nick = '';
 		this.ident = '';
 		this.host = '';
+
+		this.replyTarget = null;
 	}
 
 	isWordValid(word) {
@@ -63,6 +65,13 @@ export default class MessageData {
 		     this.params.length > 0 &&
 		     this.tail.length > 0))
 			this.valid = true;
+
+		if (this.fromUser && this.command === 'PRIVMSG') {
+			if (this.params[0][0] === '#')
+				this.replyTarget = this.params[0];
+			else
+				this.replyTarget = this.nick;
+		}
 	}
 
 	_parsePrefix(words, cmdIndex) {

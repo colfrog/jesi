@@ -1,5 +1,5 @@
 function pong(msgData) {
-	ircWriter.sendMessage(msgData.params[0], commandPrefix + 'pong');
+	ircWriter.sendMessage(msgData.replyTarget, commandPrefix + 'pong');
 }
 
 addCommand('ping', 'pong');
