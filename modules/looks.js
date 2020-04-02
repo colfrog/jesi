@@ -19,7 +19,8 @@ function doLooks(msgData) {
 	let match = text.match(/^(.)(.)(.)$/)
 	if (match && subst[match[1]] && subst[match[3]]) {
 		let response = subst[match[1]] + (subst[match[2]] || match[2]) + subst[match[3]];
-		ircWriter.sendMessage(msgData.replyTarget, response);
+		if (response !== text)
+			ircWriter.sendMessage(msgData.replyTarget, response);
 	}
 }
 
