@@ -1,17 +1,9 @@
 const subst = {
-	'O': 'O',
-	'o': 'o',
 	'^': 'v',
 	'v': '^',
 	'V': '^',
 	'>': '<',
 	'<': '>',
-	'w': 'm',
-	'm': 'w',
-	'M': 'W',
-	'W': 'M',
-	'n': 'u',
-	'u': 'n',
 };
 
 function doLooks(msgData) {
