@@ -20,7 +20,7 @@
 			"nsPass": "Your NickServ password"
 		}
 	],
-	"modules": [
+	"modules": {
 		"path": "./modules/pingpong.js",
 		"path": "./modules/modes.js",
 		"path": "./modules/cheer.js",
@@ -28,5 +28,5 @@
 		"path": "./modules/looks.js",
 		"path": "./modules/choose.js",
 		"path": "./modules/decide.js"
-	]
+	}
 }
