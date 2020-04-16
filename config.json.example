@@ -21,12 +21,12 @@
 		}
 	],
 	"modules": [
-		"path": "./modules/pingpong.js",
-		"path": "./modules/modes.js",
-		"path": "./modules/cheer.js",
-		"path": "./modules/intensify.js",
-		"path": "./modules/looks.js",
-		"path": "./modules/choose.js",
-		"path": "./modules/decide.js"
+		"./modules/pingpong.js",
+		"./modules/modes.js",
+		"./modules/cheer.js",
+		"./modules/intensify.js",
+		"./modules/looks.js",
+		"./modules/choose.js",
+		"./modules/decide.js"
 	]
 }
