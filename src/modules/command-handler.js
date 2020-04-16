@@ -19,6 +19,7 @@ export default class CommandHandler {
 		}
 	}
 
+	// TODO: Add additional help argument to expose via the ModuleHandler
 	add(command, code) {
 		const realCommand = this.module.prefix + command;
 		if (this.commands[realCommand])

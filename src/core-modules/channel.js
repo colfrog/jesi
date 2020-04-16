@@ -1,3 +1,9 @@
+const jModule = {
+	"name": "Channel Utilities",
+	"description": "Enables channel-related functionality",
+	"core": true
+};
+
 function joinChannels(msgData) {
 	let channels = Object.keys(serverInfo.user.channels);
 	if (channels.length > 0)

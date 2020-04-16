@@ -1,3 +1,9 @@
+const jModule = {
+	"name": "NickServ Registration",
+	"description": "Register through NickServ",
+	"core": true
+};
+
 function doNickserv() {
 	const ident = serverInfo.nsIdent;
 	const pass = serverInfo.nsPass;

@@ -21,62 +21,12 @@
 		}
 	],
 	"modules": [
-		{
-			"name": "ping pong",
-			"description": "Play ping pong!",
-			"path": "./modules/pingpong.js",
-			"permissions": {
-				"hasServerInfo": true,
-				"hasIRCWriter": true
-			}
-		}, {
-			"name": "modes",
-			"description": "Channel mode echo",
-			"path": "./modules/modes.js",
-			"permissions": {
-				"hasServerInfo": true,
-				"hasIRCWriter": true
-			}
-		}, {
-			"name": "cheer",
-			"description": "Cheer on \\o/",
-			"path": "./modules/cheer.js",
-			"permissions": {
-				"hasServerInfo": true,
-				"hasIRCWriter": true
-			}
-		}, {
-			"name": "intensify",
-			"description": "Intensify the conversation",
-			"path": "./modules/intensify.js",
-			"permissions": {
-				"hasServerInfo": true,
-				"hasIRCWriter": true
-			}
-		}, {
-			"name": "looks",
-			"description": "Look the other way, like you always do.",
-			"path": "./modules/looks.js",
-			"permissions": {
-				"hasServerInfo": true,
-				"hasIRCWriter": true
-			}
-		}, {
-			"name": "choose",
-			"description": "Choose something",
-			"path": "./modules/choose.js",
-			"permissions": {
-				"hasServerInfo": true,
-				"hasIRCWriter": true
-			}
-		}, {
-			"name": "decide",
-			"description": "Answer yes or no",
-			"path": "./modules/decide.js",
-			"permissions": {
-				"hasServerInfo": true,
-				"hasIRCWriter": true
-			}
-		}
+		"path": "./modules/pingpong.js",
+		"path": "./modules/modes.js",
+		"path": "./modules/cheer.js",
+		"path": "./modules/intensify.js",
+		"path": "./modules/looks.js",
+		"path": "./modules/choose.js",
+		"path": "./modules/decide.js"
 	]
 }

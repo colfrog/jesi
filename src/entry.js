@@ -10,7 +10,7 @@ import ModulesHandler from './modules/modules-handler';
 // Parse userInfo and servInfo from config.json
 const config = new Config(),
 	client = new IRC(),
-	{ servers, commandPrefix, modules } =  config
+	{ servers, commandPrefix, modules } = config
 ;
 
 servers.forEach(servInfo => {
