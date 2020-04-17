@@ -1,3 +1,9 @@
+var jModule = {
+	"name": "IRC Core",
+	"description": "Core IRC client functionality",
+	"core": true
+};
+
 function registerClient(msgData) {
 	const pass = serverInfo.pass;
 	const realname = serverInfo.user.realname;

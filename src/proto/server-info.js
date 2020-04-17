@@ -14,8 +14,10 @@ export default class ServerInfo {
 	 * encoding: The server's supported encoding (default to 'utf8')
 	 * channels: The channels to join (default to [])
 	 * channelRestrictions: Channels and their minimum mode (default to {})
-	 * nsIdent: Your NickServ identity, unused if undefined
-	 * nsPass: Your NickServ password, unused if undefined
+	 * regUser: Your registration username, unused if undefined
+	 * regPass: Your registration password, unused if undefined
+	 * regMethod: Your preferred registration method, unused if undefined
+	 * regMethod can either be nickserv, sasl or none
 	 */
 	constructor(servInfo) {
 		// For configuration, channels make more sense in the server,
@@ -29,11 +31,12 @@ export default class ServerInfo {
 		this.pass = servInfo.pass || null;
 		this.encoding = servInfo.encoding || 'utf8';
 		this.channelRestrictions = servInfo.channelRestrictions || {};
-		// TODO: Replace NickServ module with its own object
-		this.nsIdent = servInfo.nsIdent;
-		// TODO: Secure the password! It's passed to extensions!
-		this.nsPass = servInfo.nsPass;
-		// TODO: Add SASL information and work towards supporting it
+
+		// TODO: Move registration info to its own object
+		// outside of ServerInfo and setup permissions
+		this.regUser = servInfo.regUser;
+		this.regPass = servInfo.regPass;
+		this.regMethod = servInfo.regMethod;
 
 		this._tracking = false;
 		this._client = null;

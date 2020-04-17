@@ -1,3 +1,9 @@
+var jModule = {
+	"name": "Temporary Commands",
+	"description": "Temporary commands for testing",
+	"core": true
+};
+
 function doNotice(msgData) {
 	if (msgData.tailWords.length < 2)
 		return;

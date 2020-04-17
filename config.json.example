@@ -12,71 +12,22 @@
 			"name": "Snoonet",
 			"host": "irc.snoonet.org",
 			"port": 6697,
+			"regUser": "Your registration username",
+			"regPass": "Your registration password",
+			"regMethod": "sasl",
 			"channels": ["#jesi", "#jesi-dev"],
 			"channelRestrictions": {
 				"#jesi-dev": "v"
-			},
-			"nsIdent": "Your NickServ identity",
-			"nsPass": "Your NickServ password"
+			}
 		}
 	],
 	"modules": [
-		{
-			"name": "ping pong",
-			"description": "Play ping pong!",
-			"path": "./modules/pingpong.js",
-			"permissions": {
-				"hasServerInfo": true,
-				"hasIRCWriter": true
-			}
-		}, {
-			"name": "modes",
-			"description": "Channel mode echo",
-			"path": "./modules/modes.js",
-			"permissions": {
-				"hasServerInfo": true,
-				"hasIRCWriter": true
-			}
-		}, {
-			"name": "cheer",
-			"description": "Cheer on \\o/",
-			"path": "./modules/cheer.js",
-			"permissions": {
-				"hasServerInfo": true,
-				"hasIRCWriter": true
-			}
-		}, {
-			"name": "intensify",
-			"description": "Intensify the conversation",
-			"path": "./modules/intensify.js",
-			"permissions": {
-				"hasServerInfo": true,
-				"hasIRCWriter": true
-			}
-		}, {
-			"name": "looks",
-			"description": "Look the other way, like you always do.",
-			"path": "./modules/looks.js",
-			"permissions": {
-				"hasServerInfo": true,
-				"hasIRCWriter": true
-			}
-		}, {
-			"name": "choose",
-			"description": "Choose something",
-			"path": "./modules/choose.js",
-			"permissions": {
-				"hasServerInfo": true,
-				"hasIRCWriter": true
-			}
-		}, {
-			"name": "decide",
-			"description": "Answer yes or no",
-			"path": "./modules/decide.js",
-			"permissions": {
-				"hasServerInfo": true,
-				"hasIRCWriter": true
-			}
-		}
+		"./modules/pingpong.js",
+		"./modules/modes.js",
+		"./modules/cheer.js",
+		"./modules/intensify.js",
+		"./modules/looks.js",
+		"./modules/choose.js",
+		"./modules/decide.js"
 	]
 }

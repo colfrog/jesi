@@ -1,10 +1,19 @@
+var jModule = {
+	"name": "NickServ Registration",
+	"description": "Register through NickServ",
+	"core": true
+};
+
 function doNickserv() {
-	const ident = serverInfo.nsIdent;
-	const pass = serverInfo.nsPass;
+	if (serverInfo.regMethod !== 'nickserv')
+		return;
+
+	const user = serverInfo.regUser;
+	const pass = serverInfo.regPass;
 
 	if (typeof ident === 'string' && typeof pass === 'string' &&
 	    ident.length > 0 && pass.length > 0) {
-		let text = 'IDENTIFY ' + ident + ' ' + pass;
+		let text = 'IDENTIFY ' + user + ' ' + pass;
 		ircWriter.sendMessage('NickServ', text);
 	}
 }

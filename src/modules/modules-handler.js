@@ -19,10 +19,10 @@ export default class ModulesHandler {
 		server.hooks.addClosing(this.runClosing.bind(this));
 	}
 
-	addModule(moduleObj) {
-		let module = new Module(this.server, this.prefix, moduleObj);
+	async addModule(modulePath) {
+		let module = new Module(this.server, this.prefix, modulePath);
+		await module.init(this.server);
 		let name = module.name;
-		module.init(this.server);
 
 		if (this.modules[name])
 			throw 'Module ' + name + ' was defined twice.';

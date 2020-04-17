@@ -1,3 +1,12 @@
+var jModule = {
+	"name": "choose",
+	"description": "Choose something",
+	"permissions": {
+		"hasServerInfo": true,
+		"hasIRCWriter": true
+	}
+};
+
 function doChoose(msgData) {
 	// Get rid of the command
 	let text = msgData.tail.split(' ').slice(1).join(' ');

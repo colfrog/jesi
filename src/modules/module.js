@@ -19,15 +19,10 @@ export default class Module {
 	 * permissions: A ModulePermissions object (required)
 	 * settings: Module-specific settings
 	 */
-	constructor(server, prefix, params) {
+	constructor(server, prefix, path) {
 		this.server = server || throw 'Module server is required.';
-		this.name = params.name || throw 'Module name is required.';
-		this.description = params.description || '';
-		this.path = params.path || throw 'Module entry path is required';
 		this.prefix = prefix || '';
-		this.core = params.core || false;
-		this.perms = new ModulePermissions(this.core, params.permissions);
-		this.settings = params.settings || {};
+		this.path = path;
 
 		this.preinit = [];
 		this.postinit = [];
@@ -54,18 +49,18 @@ export default class Module {
 		let perms = this.perms;
 		let serverInfo = null;
 		let ircWriter = null;
-		if (perms.hasServerInfo)
-			serverInfo = server.info;
-		if (perms.hasIRCWriter)
-			ircWriter = server.writer;
 
+		// TODO: Find a way to properly pass all javascript global objects
 		let context = {
 			console: console,
+			Array: Array,
+			String: String,
+			Buffer: Buffer,
+			Object: Object,
+			JSON: JSON,
 			require: require,
 			commandPrefix: this.prefix,
 			settings: this.settings,
-			serverInfo: serverInfo,
-			ircWriter: ircWriter,
 			addPreInit: this.addPreInit.bind(this),
 			addPostInit: this.addPostInit.bind(this),
 			addClosing: this.addClosing.bind(this),
@@ -114,16 +109,28 @@ export default class Module {
 
 	async init(server) {
 		// TODO: Add checks before fs.readFile
-		const data = await fs.promises.readFile (this.path);
+		const data = await fs.promises.readFile(this.path);
 
 		// TODO: Add sanity and error-handling
 		this.context = this.buildContext(server);
-		return vm.runInContext(data, this.context, this._contextOptions);
+		vm.runInContext(data, this.context, this._contextOptions);
+
+		let module = this.context.jModule;
+		this.name = module.name || throw 'Module name is required.';
+		this.description = module.description || '';
+		this.core = module.core || false;
+		this.settings = module.settings || {};
+		this.perms = new ModulePermissions(this.core, module.permissions);
+
+		let perms = this.perms;
+		if (perms.hasServerInfo)
+			this.context.serverInfo = server.info;
+		if (perms.hasIRCWriter)
+			this.context.ircWriter = server.writer;
 	}
 
 	async refresh() {
 		const data = await fs.promises.readFile (this.path);
-
 		return vm.runInContext(data, this.context, this._contextOptions);
 	}
 

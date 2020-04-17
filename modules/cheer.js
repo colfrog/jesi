@@ -1,3 +1,12 @@
+var jModule = {
+	"name": "cheer",
+	"description": "Cheer on \\o/",
+	"permissions": {
+		"hasServerInfo": true,
+		"hasIRCWriter": true
+	}
+};
+
 let cheers = [
 	'FSCK(8) YEAH!',
 	'HOORAH!',

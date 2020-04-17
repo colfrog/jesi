@@ -1,3 +1,12 @@
+var jModule = {
+	"name": "intensify",
+	"description": "Intensify the conversation",
+	"permissions": {
+		"hasServerInfo": true,
+		"hasIRCWriter": true
+	}
+};
+
 function doIntensify(msgData) {
 	let text = msgData.tail;
 	let match = text.match(/^\[(.+)\]$/);

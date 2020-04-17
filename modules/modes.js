@@ -1,3 +1,12 @@
+var jModule = {
+	"name": "modes",
+	"description": "Channel mode echo",
+	"permissions": {
+		"hasServerInfo": true,
+		"hasIRCWriter": true
+	}
+};
+
 function modes(msgData) {
 	let nick = msgData.nick;
 	let chan = msgData.params[0];
