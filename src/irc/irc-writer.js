@@ -22,7 +22,7 @@ export default class IRCWriter {
 
 		let msg = command;
 		for (let i = 0; i < args.length; i++) {
-			if (i == args.length - 1)
+			if (i === args.length - 1)
 				msg += ' :' + args[i];
 			else
 				msg += ' ' + args[i];

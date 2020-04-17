@@ -14,7 +14,7 @@
 			"port": 6697,
 			"regUser": "Your registration username",
 			"regPass": "Your registration password",
-			"regMethod": "nickserv",
+			"regMethod": "sasl",
 			"channels": ["#jesi", "#jesi-dev"],
 			"channelRestrictions": {
 				"#jesi-dev": "v"

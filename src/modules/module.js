@@ -50,8 +50,14 @@ export default class Module {
 		let serverInfo = null;
 		let ircWriter = null;
 
+		// TODO: Find a way to properly pass all javascript global objects
 		let context = {
 			console: console,
+			Array: Array,
+			String: String,
+			Buffer: Buffer,
+			Object: Object,
+			JSON: JSON,
 			require: require,
 			commandPrefix: this.prefix,
 			settings: this.settings,
