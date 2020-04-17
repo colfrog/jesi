@@ -1,4 +1,4 @@
-const jModule = {
+var jModule = {
 	"name": "modes",
 	"description": "Channel mode echo",
 	"permissions": {

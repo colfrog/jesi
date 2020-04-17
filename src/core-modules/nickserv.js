@@ -1,4 +1,4 @@
-const jModule = {
+var jModule = {
 	"name": "NickServ Registration",
 	"description": "Register through NickServ",
 	"core": true

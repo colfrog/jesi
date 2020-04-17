@@ -125,7 +125,6 @@ export default class Module {
 
 	async refresh() {
 		const data = await fs.promises.readFile (this.path);
-
 		return vm.runInContext(data, this.context, this._contextOptions);
 	}
 

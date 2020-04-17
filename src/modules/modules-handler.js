@@ -21,8 +21,8 @@ export default class ModulesHandler {
 
 	async addModule(modulePath) {
 		let module = new Module(this.server, this.prefix, modulePath);
-		let name = module.name;
 		await module.init(this.server);
+		let name = module.name;
 
 		if (this.modules[name])
 			throw 'Module ' + name + ' was defined twice.';

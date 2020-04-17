@@ -1,4 +1,4 @@
-const jModule = {
+var jModule = {
 	"name": "IRC Core",
 	"description": "Core IRC client functionality",
 	"core": true
