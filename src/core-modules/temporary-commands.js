@@ -56,7 +56,7 @@ function doPlease(msgData) {
 
 function doLeave(msgData) {
 	ircWriter.sendAction(msgData.replyTarget, 'cries');
-	ircWriter.partFrom(channel, 'why does ' + msgData.nick + ' hate me :(');
+	ircWriter.partFrom(msgData.params[0], 'why does ' + msgData.nick + ' hate me :(');
 }
 
 var blamLocked = false;
