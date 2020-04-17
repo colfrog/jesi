@@ -1,4 +1,4 @@
-const jModule = {
+var jModule = {
 	"name": "Channel Utilities",
 	"description": "Enables channel-related functionality",
 	"core": true

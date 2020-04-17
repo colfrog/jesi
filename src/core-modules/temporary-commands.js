@@ -1,4 +1,4 @@
-const jModule = {
+var jModule = {
 	"name": "Temporary Commands",
 	"description": "Temporary commands for testing",
 	"core": true

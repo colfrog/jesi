@@ -1,4 +1,4 @@
-const jModule = {
+var jModule = {
 	"name": "cheer",
 	"description": "Cheer on \\o/",
 	"permissions": {
