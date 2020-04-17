@@ -12,12 +12,13 @@
 			"name": "Snoonet",
 			"host": "irc.snoonet.org",
 			"port": 6697,
+			"regUser": "Your registration username",
+			"regPass": "Your registration password",
+			"regMethod": "nickserv",
 			"channels": ["#jesi", "#jesi-dev"],
 			"channelRestrictions": {
 				"#jesi-dev": "v"
-			},
-			"nsIdent": "Your NickServ identity",
-			"nsPass": "Your NickServ password"
+			}
 		}
 	],
 	"modules": [
