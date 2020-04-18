@@ -20,8 +20,8 @@ export default class ModulesHandler {
 	}
 
 	async addModule(modulePath) {
-		let module = new Module(this.server, this.prefix, modulePath);
-		await module.init(this.server);
+		let module = new Module(this, modulePath);
+		await module.init();
 		let name = module.name;
 
 		if (this.modules[name])
@@ -35,11 +35,12 @@ export default class ModulesHandler {
 			delete this.modules[name];
 	}
 
-	refreshModule(name) {
-		this.modules[name].refresh();
+	refresh(name) {
+		if (this.modules[name])
+			this.modules[name].refresh();
 	}
 
-	refreshModules() {
+	refreshAll() {
 		Object.values(this.modules).forEach(module => module.refresh());
 	}
 

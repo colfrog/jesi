@@ -23,6 +23,7 @@ export default class ServerInfo {
 		// For configuration, channels make more sense in the server,
 		// but placing them in a user can simplify the program.
 		servInfo.userInfo.channels = servInfo.channels;
+		this.ownerHost = servInfo.ownerHost;
 		this.user = new UserInfo(servInfo.userInfo) || throw 'User info is required.';
 		this.name = servInfo.name || throw 'Server name is required.';
 		this.host = servInfo.host || throw 'Server hostname is required.';

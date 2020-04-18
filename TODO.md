@@ -2,8 +2,8 @@
 
 * Find and implement a tool to document the code
 * Add module-writing documentation
-* Better handling of module definitions (move to modules/modules.json, implement as a list in config.json)
 * Add dependency resolution to modules (list dependencies in modules.json, the bot should rewrite the package.json and run npm install accordingly)
+* Handle ISUPPORT
 * IRCv3 capability negociation API for modules
 * Add user privilege checks to the permission-based filter
 * HTTP API (as a module)
