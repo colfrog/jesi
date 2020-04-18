@@ -28,7 +28,6 @@
 		"./modules/cheer.js",
 		"./modules/intensify.js",
 		"./modules/looks.js",
-		"./modules/choose.js",
-		"./modules/decide.js"
+		"./modules/decision.js"
 	]
 }

@@ -1,11 +1,24 @@
+const crypto = require('crypto');
+
 var jModule = {
-	"name": "choose",
-	"description": "Choose something",
+	"name": "decision",
+	"description": "Ease decisions",
 	"permissions": {
 		"hasServerInfo": true,
-		"hasIRCWriter": true
+		"hasIRCWriter": true,
+		"hasRequire": true
 	}
 };
+
+function randomNumber(max) {
+	return crypto.randomBytes(1)[0] % max;
+}
+
+function doDecide(msgData) {
+	let who = msgData.nick;
+	let choice = randomNumber(2) ? 'yes' : 'no';
+	ircWriter.sendMessage(msgData.replyTarget, who + ': ' + choice + '.');
+}
 
 function doChoose(msgData) {
 	// Get rid of the command
@@ -22,8 +35,9 @@ function doChoose(msgData) {
 		commaList :
 		choices;
 
-	let index = Math.floor(Math.random() * choices.length);
+	let index = randomNumber(choices.length);
 	ircWriter.sendMessage(msgData.replyTarget, msgData.nick + ': ' + choices[index]);
 }
 
+addCommand('decide', 'doDecide');
 addCommand('choose', 'doChoose');

@@ -55,6 +55,7 @@ export default class Module {
 			Buffer: Buffer,
 			Object: Object,
 			JSON: JSON,
+			Math: Math,
 			require: () => { return {} },
 			serverInfo: null,
 			ircWriter: null,
