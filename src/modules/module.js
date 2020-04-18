@@ -19,18 +19,15 @@ export default class Module {
 	 * permissions: A ModulePermissions object (required)
 	 * settings: Module-specific settings
 	 */
-	constructor(server, prefix, path) {
-		this.server = server || throw 'Module server is required.';
-		this.prefix = prefix || '';
+	constructor(modHandler, path) {
+		this.handler = modHandler || throw 'Modules handler is required';
+		this.server = modHandler.server;
+		this.prefix = modHandler.prefix || '';
 		this.path = path;
 
 		this.preinit = [];
 		this.postinit = [];
 		this.closing = [];
-		this.hooks = new HookHandler(this);
-		this.commands = new CommandHandler(this);
-		this.matches = new MatchHandler(this);
-
 		this.context = {};
 		this._contextOptions = {
 			contextName: this.name + ' (module)',
@@ -58,7 +55,10 @@ export default class Module {
 			Buffer: Buffer,
 			Object: Object,
 			JSON: JSON,
-			require: require,
+			require: () => { return {} },
+			serverInfo: null,
+			ircWriter: null,
+			modHandler: null,
 			commandPrefix: this.prefix,
 			settings: this.settings,
 			addPreInit: this.addPreInit.bind(this),
@@ -107,12 +107,14 @@ export default class Module {
 			this.context, this._contextOptions);
 	}
 
-	async init(server) {
+	async init() {
 		// TODO: Add checks before fs.readFile
 		const data = await fs.promises.readFile(this.path);
 
 		// TODO: Add sanity and error-handling
-		this.context = this.buildContext(server);
+		this._initHandlers();
+		this.context = this.buildContext(this.server);
+		// Do a permission-less first run to gather module information from jModule
 		vm.runInContext(data, this.context, this._contextOptions);
 
 		let module = this.context.jModule;
@@ -122,14 +124,24 @@ export default class Module {
 		this.settings = module.settings || {};
 		this.perms = new ModulePermissions(this.core, module.permissions);
 
-		let perms = this.perms;
-		if (perms.hasServerInfo)
-			this.context.serverInfo = server.info;
-		if (perms.hasIRCWriter)
-			this.context.ircWriter = server.writer;
+		// Now that the module is set up, properly load it
+		await this.refresh();
 	}
 
 	async refresh() {
+		this._initHandlers();
+		this.context = this.buildContext(this.server);
+
+		let perms = this.perms;
+		if (perms.hasServerInfo)
+			this.context.serverInfo = this.server.info;
+		if (perms.hasIRCWriter)
+			this.context.ircWriter = this.server.writer;
+		if (perms.hasRequire)
+			this.context.require = require;
+		if (perms.hasModulesHandler)
+			this.context.modHandler = this.handler;
+
 		const data = await fs.promises.readFile (this.path);
 		return vm.runInContext(data, this.context, this._contextOptions);
 	}
@@ -156,5 +168,11 @@ export default class Module {
 
 	runClosing() {
 		this.closing.forEach(code => this.run(code));
+	}
+
+	_initHandlers() {
+		this.hooks = new HookHandler(this);
+		this.commands = new CommandHandler(this);
+		this.matches = new MatchHandler(this);
 	}
 }

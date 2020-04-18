@@ -1,5 +1,6 @@
 [
 	"./bin/core-modules/core.js",
+	"./bin/core-modules/reload.js",
 	"./bin/core-modules/sasl.js",
 	"./bin/core-modules/nickserv.js",
 	"./bin/core-modules/channel.js",

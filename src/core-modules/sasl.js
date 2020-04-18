@@ -19,7 +19,7 @@ function requestCapability() {
 function capAcknowledged(msgData) {
 	if (msgData.params[1] === 'ACK' && msgData.tail === 'sasl') {
 		ircWriter.sendCommand('AUTHENTICATE', 'PLAIN');
-		removeHook('CAP', 'capAcknowledged');
+		delHook('CAP', 'capAcknowledged');
 	}
 }
 
