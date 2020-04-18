@@ -9,6 +9,7 @@
 	},
 	"servers": [
 		{
+			"ownerHost": "nuxi.ca",
 			"name": "Snoonet",
 			"host": "irc.snoonet.org",
 			"port": 6697,
