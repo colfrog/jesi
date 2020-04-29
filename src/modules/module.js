@@ -5,6 +5,7 @@ import ModulePermissions from './module-permissions';
 import HookHandler from './hook-handler';
 import CommandHandler from './command-handler';
 import MatchHandler from './match-handler';
+
 import UserInfo from '../proto/user-info';
 import { hasAtLeast } from '../proto/mode-parsing';
 
@@ -24,6 +25,7 @@ export default class Module {
 		this.server = modHandler.server;
 		this.prefix = modHandler.prefix || '';
 		this.path = path;
+		this.caps = {};
 
 		this.preinit = [];
 		this.postinit = [];
@@ -60,6 +62,8 @@ export default class Module {
 			serverInfo: null,
 			ircWriter: null,
 			modHandler: null,
+			negociateCap: () => {},
+			endCap: () => {},
 			commandPrefix: this.prefix,
 			settings: this.settings,
 			addPreInit: this.addPreInit.bind(this),
@@ -142,6 +146,10 @@ export default class Module {
 			this.context.require = require;
 		if (perms.hasModulesHandler)
 			this.context.modHandler = this.handler;
+		if (perms.hasCapabilityNegociator) {
+			this.context.negociateCap = this._negociateCapability.bind(this);
+			this.context.endCap = this._endCapabilityNegociations.bind(this);
+		}
 
 		const data = await fs.promises.readFile (this.path);
 		return vm.runInContext(data, this.context, this._contextOptions);
@@ -175,5 +183,23 @@ export default class Module {
 		this.hooks = new HookHandler(this);
 		this.commands = new CommandHandler(this);
 		this.matches = new MatchHandler(this);
+	}
+
+	_negociateCapability(cap, code) {
+		let callback = msgData => this.run(code, msgData);
+		this.server.capNegociator.add(cap, callback);
+
+		if (this.caps[cap])
+			this.caps[cap].push(callback);
+		else
+			this.caps[cap] = [callback];
+	}
+
+	_endCapabilityNegociations() {
+		let keys = Object.keys(this.caps);
+		for (let i = 0; i < keys.length; i++) {
+			this.caps[keys[i]].forEach(cb =>
+				this.server.capNegociator.del(keys[i], cb));
+		}
 	}
 }

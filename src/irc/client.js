@@ -3,6 +3,7 @@ import tls from 'tls';
 import regeneratorRuntime from 'regenerator-runtime';
 
 import Hooks from './hooks';
+import CapabilityNegociator from './capability-negociator';
 import MessageData from '../proto/message-data';
 import ServerInfo from '../proto/server-info';
 import IRCWriter from './irc-writer';
@@ -14,17 +15,20 @@ export default class Client {
 		this.writer = new IRCWriter(this);
 
 		this.hooks = new Hooks();
+		this.capNegociator = new CapabilityNegociator(this);
 	}
 
 	async connect() {
 		if (this.connected)
 			return;
+
 		this._socket = this._makeSocket();
 	}
 
 	async reconnect() {
 		if (this.connected)
 			close();
+
 		this._socket = this._makeSocket();
 	}
 
@@ -65,6 +69,7 @@ export default class Client {
 		console.log('Connected to ' + this.info.name);
 		this.info.enableTracking(this);
 		this.hooks.runPreInit(this);
+		this.capNegociator.request();
 	}
 
 	async _onSocketError(error) {

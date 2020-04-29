@@ -13,9 +13,10 @@ const config = new Config(),
 	{ servers, commandPrefix, modules } = config
 ;
 
-servers.forEach(servInfo => {
+servers.forEach(async servInfo => {
 	const server = client.addServer(servInfo);
 	const modsHandler = new ModulesHandler(server, commandPrefix, modules);
+	await modsHandler.initModules();
 
 	server.connect();
 });

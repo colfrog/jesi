@@ -6,6 +6,7 @@ export default class ModulePermissions {
 	 * hasIRCWriter: Whether the module has access to the IRC writer
 	 * hasRequire: Whether the module has access to node's require
 	 * hasModulesHandler: Wheter the module has access to its ModulesHandler
+	 * hasCapabilityNegociator: Whether the module can negociate IRCv3 capabilities
 	 */
 	constructor(core, params) {
 		let obj = params || {}; // It's reasonable to not define this
@@ -13,5 +14,6 @@ export default class ModulePermissions {
 		this.hasIRCWriter = obj.hasIRCWriter || core;
 		this.hasRequire = obj.hasRequire || core;
 		this.hasModulesHandler = obj.hasModulesHandler || core;
+		this.hasCapabilityNegociator = obj.hasCapabilityNegociator || core;
 	}
 }

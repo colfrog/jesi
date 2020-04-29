@@ -11,12 +11,17 @@ export default class ModulesHandler {
 		if (!modules || typeof modules !== 'object' || !modules.forEach)
 			return;
 
-		this.initModules(coreModules.concat(modules));
+		this.moduleList = coreModules.concat(modules);
 
 		server.hooks.add('*', this.toModules.bind(this));
 		server.hooks.addPreInit(this.runPreInit.bind(this));
 		server.hooks.addPostInit(this.runPostInit.bind(this));
 		server.hooks.addClosing(this.runClosing.bind(this));
+	}
+
+	async initModules() {
+		for (let i = 0; i < this.moduleList.length; i++)
+			await this.addModule(this.moduleList[i]);
 	}
 
 	async addModule(modulePath) {
@@ -42,10 +47,6 @@ export default class ModulesHandler {
 
 	refreshAll() {
 		Object.values(this.modules).forEach(module => module.refresh());
-	}
-
-	initModules(modules) {
-		modules.forEach(this.addModule.bind(this));
 	}
 
 	toModules(server, msgData) {

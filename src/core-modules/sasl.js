@@ -4,27 +4,14 @@ var jModule = {
 	"core": true
 };
 
-// TODO: Expose a callback-based capability negociation API instead of doing this manually
-function requestCapability() {
+function negociate(msgData) {
 	if (serverInfo.regMethod !== 'sasl' ||
 	    typeof serverInfo.regUser !== 'string' ||
 	    typeof serverInfo.regPass !== 'string')
-		return;
+		endCap();
 
-	// TODO: negociate SASL mechanism, support many to allow for configuration
-	ircWriter.sendCommand('CAP', ['REQ', 'sasl']);
-	addHook('CAP', 'capAcknowledged');
-}
-
-function capAcknowledged(msgData) {
-	if (msgData.params[1] === 'ACK' && msgData.tail === 'sasl') {
+	if (msgData.params[1] === 'ACK' && msgData.tail === 'sasl')
 		ircWriter.sendCommand('AUTHENTICATE', 'PLAIN');
-		delHook('CAP', 'capAcknowledged');
-	}
-}
-
-function endCap() {
-	ircWriter.sendCommand('CAP', 'END');
 }
 
 function authenticate(msgData) {
@@ -35,9 +22,11 @@ function authenticate(msgData) {
 	let pass = serverInfo.regPass;
 	let b64 = Buffer.from(`\u0000${user}\u0000${pass}`).toString('base64');
 	ircWriter.sendCommand('AUTHENTICATE', b64);
+
+	endCap();
 }
 
-addPreInit('requestCapability');
+negociateCap('sasl', 'negociate');
+addHook('AUTHENTICATE', 'authenticate');
 addHook('900', 'endCap');
 addHook('904', 'endCap');
-addHook('AUTHENTICATE', 'authenticate');
