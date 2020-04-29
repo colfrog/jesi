@@ -1,3 +1,4 @@
+// TODO: find and expose unsupported capabilities with CAP LS before CAP REQ
 export default class CapabilityNegociator {
 	constructor(client) {
 		this.client = client;

@@ -10,8 +10,13 @@ function negociate(msgData) {
 	    typeof serverInfo.regPass !== 'string')
 		endCap();
 
-	if (msgData.params[1] === 'ACK' && msgData.tail === 'sasl')
-		ircWriter.sendCommand('AUTHENTICATE', 'PLAIN');
+	if (msgData.params[1] === 'ACK') {
+		msgData.tailWords.forEach(cap => {
+			if (cap === 'sasl')
+				// TODO: support additional authentication methods
+				ircWriter.sendCommand('AUTHENTICATE', 'PLAIN');
+		});
+	}
 }
 
 function authenticate(msgData) {
@@ -22,8 +27,6 @@ function authenticate(msgData) {
 	let pass = serverInfo.regPass;
 	let b64 = Buffer.from(`\u0000${user}\u0000${pass}`).toString('base64');
 	ircWriter.sendCommand('AUTHENTICATE', b64);
-
-	endCap();
 }
 
 negociateCap('sasl', 'negociate');
