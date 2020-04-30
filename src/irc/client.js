@@ -4,6 +4,8 @@ import regeneratorRuntime from 'regenerator-runtime';
 
 import Hooks from './hooks';
 import CapabilityNegociator from './capability-negociator';
+import Logger from './logger';
+
 import MessageData from '../proto/message-data';
 import ServerInfo from '../proto/server-info';
 import IRCWriter from './irc-writer';
@@ -16,6 +18,7 @@ export default class Client {
 
 		this.hooks = new Hooks();
 		this.capNegociator = new CapabilityNegociator(this);
+		this.logger = new Logger(this);
 	}
 
 	async connect() {

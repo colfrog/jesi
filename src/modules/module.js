@@ -58,12 +58,14 @@ export default class Module {
 			Object: Object,
 			JSON: JSON,
 			Math: Math,
+			RegExp: RegExp,
 			require: () => { return {} },
 			serverInfo: null,
 			ircWriter: null,
 			modHandler: null,
 			negociateCap: () => {},
 			endCap: () => {},
+			getLogs: () => {},
 			commandPrefix: this.prefix,
 			settings: this.settings,
 			addPreInit: this.addPreInit.bind(this),
@@ -149,6 +151,10 @@ export default class Module {
 		if (perms.hasCapabilityNegociator) {
 			this.context.negociateCap = this._negociateCapability.bind(this);
 			this.context.endCap = this._endCapabilityNegociations.bind(this);
+		}
+		if (perms.hasLogAccess) {
+			let logger = this.server.logger;
+			this.context.getLogs = logger.getLogs.bind(logger);
 		}
 
 		const data = await fs.promises.readFile (this.path);
