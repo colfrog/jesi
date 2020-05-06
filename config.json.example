@@ -29,6 +29,7 @@
 		"./modules/intensify.js",
 		"./modules/looks.js",
 		"./modules/decision.js",
-		"./modules/replace.js"
+		"./modules/replace.js",
+		"./modules/mock.js"
 	]
 }
