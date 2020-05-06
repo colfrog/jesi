@@ -28,8 +28,12 @@ function doMock(msgData) {
       .split(" ")
       .slice(1)
       .join(" ");
+
+    // Send the previous message when there is only %mock
+    if (msgData.tailWords.length == 1) {
+      message = rows[0].message;
     // only scan thru history if we have only 1 word on the line
-    if (msgData.tailWords.length == 2) {
+    } else if (msgData.tailWords.length == 2) {
       for (let i = 0; i < rows.length; i++) {
         let row = rows[i];
         // check if it's the nick
@@ -39,7 +43,9 @@ function doMock(msgData) {
         }
       }
     }
+
     ircWriter.sendMessage(msgData.replyTarget, mockMessage(message));
   });
 }
+
 addCommand("mock", "doMock");
