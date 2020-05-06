@@ -9,7 +9,7 @@ export default class CommandHandler {
 		if (!msgData.tail.startsWith(this.module.prefix))
 			return;
 
-		let command = msgData.tailWords[0];
+		let command = msgData.tailWords[0].toLowerCase();
 		let snippets = this.commands[command];
 		if (snippets) {
 			snippets.forEach((code) => {
@@ -21,7 +21,7 @@ export default class CommandHandler {
 
 	// TODO: Add additional help argument to expose via the ModuleHandler
 	add(command, code) {
-		const realCommand = this.module.prefix + command;
+		const realCommand = (this.module.prefix + command).toLowerCase();
 		if (this.commands[realCommand])
 			this.commands[realCommand].push(code);
 		else
