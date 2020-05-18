@@ -11,8 +11,7 @@ function doNickserv() {
 	const user = serverInfo.regUser;
 	const pass = serverInfo.regPass;
 
-	if (typeof ident === 'string' && typeof pass === 'string' &&
-	    ident.length > 0 && pass.length > 0) {
+	if (typeof user === 'string' && typeof pass === 'string') {
 		let text = 'IDENTIFY ' + user + ' ' + pass;
 		ircWriter.sendMessage('NickServ', text);
 	}
