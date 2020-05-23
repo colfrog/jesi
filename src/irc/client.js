@@ -10,7 +10,7 @@ import MessageData from '../proto/message-data';
 import ServerInfo from '../proto/server-info';
 import IRCWriter from './irc-writer';
 
-export default class Client {
+export default class IRCClient {
 	constructor(info) {
 		this.connected = false;
 		this.info = new ServerInfo(info);
