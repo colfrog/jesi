@@ -4,12 +4,16 @@ var jModule = {
 	"core": true
 };
 
-function negociate(msgData) {
+function decideSASL() {
 	if (serverInfo.regMethod !== 'sasl' ||
 	    typeof serverInfo.regUser !== 'string' ||
 	    typeof serverInfo.regPass !== 'string')
-		endCap();
+		return;
 
+	negociateCap('sasl', 'negociate');
+}
+
+function negociate(msgData) {
 	if (msgData.params[1] === 'ACK') {
 		msgData.tailWords.forEach(cap => {
 			if (cap === 'sasl')
@@ -29,7 +33,8 @@ function authenticate(msgData) {
 	ircWriter.sendCommand('AUTHENTICATE', b64);
 }
 
-negociateCap('sasl', 'negociate');
+
+addPreInit('decideSASL');
 addHook('AUTHENTICATE', 'authenticate');
 addHook('900', 'endCap');
 addHook('904', 'endCap');
