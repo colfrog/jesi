@@ -75,7 +75,8 @@ function doLooks(msgData) {
 	let left_eye = eye(subst[eyes[0]]);
 	let right_eye = eye(subst[eyes[1]]);
 
-	let mouth = text.substring(eyes[0].length)[0];
+	let mouth = text.substring(eyes[0].length);
+	mouth = mouth.substring(0, mouth.indexOf(eyes[1]));
 	mouth = subst[mouth] || mouth;
 
 	let response = left_eye + mouth + right_eye;
