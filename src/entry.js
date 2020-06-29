@@ -2,14 +2,15 @@ import fs from 'fs';
 
 import ServerInfo from './proto/server-info';
 import UserInfo from './proto/user-info';
-import IRC from './irc/irc';
+import IRCClient from './irc/client';
+import Jesi from './jesi';
 import Config from './proto/config';
 
 import ModulesHandler from './modules/modules-handler';
 
 // Parse userInfo and servInfo from config.json
 const config = new Config(),
-	client = new IRC(),
+	client = new Jesi(IRCClient),
 	{ servers, commandPrefix, modules } = config
 ;
 
