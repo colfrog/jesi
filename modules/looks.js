@@ -48,7 +48,6 @@ function getEyes(text) {
 
 	Object.keys(subst).forEach(eye => {
 		let index = text.indexOf(eye);
-		console.log(eye, index);
 		if (index == -1)
 			return;
 		if (index > 0) {
@@ -67,7 +66,6 @@ function getEyes(text) {
 function doLooks(msgData) {
 	let text = msgData.tail;
 	let eyes = getEyes(text);
-	console.log(eyes);
 
 	if (eyes[0] === null || eyes[1] === null)
 		return;
@@ -76,14 +74,11 @@ function doLooks(msgData) {
 
 	let left_eye = eye(subst[eyes[0]]);
 	let right_eye = eye(subst[eyes[1]]);
-	console.log(left_eye, right_eye);
 
 	let mouth = text.substring(eyes[0].length)[0];
 	mouth = subst[mouth] || mouth;
-	console.log(mouth);
 
 	let response = left_eye + mouth + right_eye;
-	console.log(response);
 
 	ircWriter.sendMessage(msgData.replyTarget, response);
 }
