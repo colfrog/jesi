@@ -14,8 +14,22 @@ const subst = {
 	'>': '<',
 	'<': '>',
 	'-': ['O', 'o'],
-	'o': '-',
-	'O': '-',
+	'o': ['-', '^'],
+	'O': ['-', '^'],
+	'=': '||',
+	'||': '__',
+	'__': ['@', '#', '*', '((', '))'],
+	'@': '#',
+	'#': '*',
+	'((': '(-(',
+	'))': ')-)',
+	'*': ['(-(', ')-)', '(_O_)', '(---)'],
+	'(-(': ')-)',
+	')-)': '(-(',
+	'(_O_)': ['(---)', '(O__)', '(__O)'],
+	'(---)': '(_O_)',
+	'(O__)': ['(O__)', '(_O_)', '(__O)'],
+	'(__O)': ['(O__)', '(_O_)', '(__O)'],
 };
 
 function eye(subst) {
@@ -29,22 +43,49 @@ function eye(subst) {
 	}
 }
 
-function doLooks(msgData) {
-	let text = msgData.tail;
-	let match = text.match(/^(.)(.)(.)$/)
-	if (match && subst[match[1]] && subst[match[3]]) {
-		let s = []
-		for (i = 1; i <= 3; i++)
-			s.push(subst[match[i]]);
+function getEyes(text) {
+	let eyes = [null, null];
 
-		let left_eye = eye(s[0]);
-		let right_eye = eye(s[2]);
-		let mouth = subst[match[2]] || match[2];
-		let response = left_eye + mouth + right_eye;
+	Object.keys(subst).forEach(eye => {
+		let index = text.indexOf(eye);
+		console.log(eye, index);
+		if (index == -1)
+			return;
+		if (index > 0) {
+			eyes[1] = eye;
+			return;
+		}
 
-		if (response !== text)
-			ircWriter.sendMessage(msgData.replyTarget, response);
-	}
+		eyes[0] = eye;
+		if (text.substring(eye.length).indexOf(eye) != -1)
+			eyes[1] = eye;
+	});
+
+	return eyes;
 }
 
-addMatch(/^...$/, 'doLooks');
+function doLooks(msgData) {
+	let text = msgData.tail;
+	let eyes = getEyes(text);
+	console.log(eyes);
+
+	if (eyes[0] === null || eyes[1] === null)
+		return;
+	if (eyes[0].toLowerCase() !== eyes[1].toLowerCase())
+		return;
+
+	let left_eye = eye(subst[eyes[0]]);
+	let right_eye = eye(subst[eyes[1]]);
+	console.log(left_eye, right_eye);
+
+	let mouth = text.substring(eyes[0].length)[0];
+	mouth = subst[mouth] || mouth;
+	console.log(mouth);
+
+	let response = left_eye + mouth + right_eye;
+	console.log(response);
+
+	ircWriter.sendMessage(msgData.replyTarget, response);
+}
+
+addMatch(/^\S{3,11}$/, 'doLooks');
