@@ -77,11 +77,18 @@ function doLooks(msgData) {
 
 	let mouth = text.substring(eyes[0].length);
 	mouth = mouth.substring(0, mouth.indexOf(eyes[1]));
-	mouth = subst[mouth] || mouth;
+	if (!mouth)
+		mouth = eyes[1];
+
+	if (eyes[0] + mouth + eyes[1] !== text)
+		return;
+
+	if (subst[mouth])
+		mouth = eye(subst[mouth]);
 
 	let response = left_eye + mouth + right_eye;
 
 	ircWriter.sendMessage(msgData.replyTarget, response);
 }
 
-addMatch(/^\S{3,11}$/, 'doLooks');
+addMatch(/^\S{3,15}$/, 'doLooks');
