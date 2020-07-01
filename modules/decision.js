@@ -4,7 +4,6 @@ var jModule = {
 	"name": "decision",
 	"description": "Ease decisions",
 	"permissions": {
-		"hasServerInfo": true,
 		"hasIRCWriter": true,
 		"hasRequire": true
 	}

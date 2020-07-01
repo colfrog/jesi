@@ -2,7 +2,6 @@ var jModule = {
 	"name": "intensify",
 	"description": "Intensify the conversation",
 	"permissions": {
-		"hasServerInfo": true,
 		"hasIRCWriter": true
 	}
 };

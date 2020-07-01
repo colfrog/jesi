@@ -2,7 +2,6 @@ var jModule = {
 	"name": "looks",
 	"description": "Look the other way, like you always do.",
 	"permissions": {
-		"hasServerInfo": true,
 		"hasIRCWriter": true
 	}
 };
