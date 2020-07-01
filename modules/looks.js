@@ -69,8 +69,6 @@ function doLooks(msgData) {
 
 	if (eyes[0] === null || eyes[1] === null)
 		return;
-	if (eyes[0].toLowerCase() !== eyes[1].toLowerCase())
-		return;
 
 	let left_eye = eye(subst[eyes[0]]);
 	let right_eye = eye(subst[eyes[1]]);
