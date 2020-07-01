@@ -2,7 +2,6 @@ var jModule = {
   name: "mock",
   description: "Mocks the given message",
   permissions: {
-    hasServerInfo: true,
     hasIRCWriter: true,
     hasLogAccess: true
   }

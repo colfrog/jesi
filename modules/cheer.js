@@ -2,7 +2,6 @@ var jModule = {
 	"name": "cheer",
 	"description": "Cheer on \\o/",
 	"permissions": {
-		"hasServerInfo": true,
 		"hasIRCWriter": true
 	}
 };

@@ -2,7 +2,6 @@ var jModule = {
 	"name": "pingpong",
 	"description": "Play ping pong!",
 	"permissions": {
-		"hasServerInfo": true,
 		"hasIRCWriter": true
 	}
 };
