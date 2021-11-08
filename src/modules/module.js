@@ -117,7 +117,6 @@ export default class Module {
 	async init() {
 		// TODO: Add checks before fs.readFile
 		const data = await fs.promises.readFile(this.path);
-
 		// TODO: Add sanity and error-handling
 		this._initHandlers();
 		this.context = this.buildContext(this.server);
@@ -136,6 +135,9 @@ export default class Module {
 	}
 
 	async refresh() {
+		this.preinit = [];
+		this.postinit = [];
+		this.closing = [];
 		this._initHandlers();
 		this.context = this.buildContext(this.server);
 
