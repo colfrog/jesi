@@ -9,9 +9,9 @@
 	},
 	"servers": [
 		{
-			"ownerHost": "nuxi.ca",
-			"name": "Snoonet",
-			"host": "irc.snoonet.org",
+			"ownerHost": "nilio.ca",
+			"name": "Libera Chat",
+			"host": "irc.libera.chat",
 			"port": 6697,
 			"regUser": "Your registration username",
 			"regPass": "Your registration password",
