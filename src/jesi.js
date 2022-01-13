@@ -16,7 +16,7 @@ export default class Jesi {
 		return client;
 	}
 
-	getServer(name) {
+	deleteServer(name) {
 		this.clients[name].close();
 		delete this.clients[name];
 	}
