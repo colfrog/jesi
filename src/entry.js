@@ -7,16 +7,19 @@ import Jesi from './jesi';
 import Config from './proto/config';
 
 import ModulesHandler from './modules/modules-handler';
+import APIWebsocketServer from './api/websocket-server';
 
 // Parse userInfo and servInfo from config.json
 const config = new Config(),
-	client = new Jesi(IRCClient),
+	jesi = new Jesi(IRCClient),
 	{ servers, commandPrefix, modules } = config;
 
 servers.forEach(async servInfo => {
-	const server = client.addServer(servInfo);
+	const server = jesi.addServer(servInfo);
 	const modsHandler = new ModulesHandler(server, commandPrefix, modules);
 	await modsHandler.initModules();
 
 	server.connect();
 });
+
+const wsServer = new APIWebsocketServer(jesi, 'localhost', 4222);

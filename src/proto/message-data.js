@@ -41,6 +41,8 @@ export default class MessageData {
 			if (match && match.length === words[i].length)
 				return i;
 		}
+
+                return null;
 	}
 
 	parse() {
@@ -53,17 +55,15 @@ export default class MessageData {
 			.filter(this.isWordValid);
 
 		let cmdIndex = this.getCommandIndex(words);
-		this._parsePrefix(words, cmdIndex),
-		this._parseTags(words, cmdIndex),
-		this._parseCommand(words, cmdIndex),
-		this._parseParamsAndTail(words, cmdIndex)
+                if (cmdIndex === null)
+                        return;
+                
+		this._parsePrefix(words, cmdIndex);
+		this._parseTags(words, cmdIndex);
+		this._parseCommand(words, cmdIndex);
+		this._parseParamsAndTail(words, cmdIndex);
 
-		if ((typeof this.command === 'string' &&
-		     typeof this.params === 'object' &&
-		     typeof this.tail === 'string') ||
-		    (this.command.length > 0 &&
-		     this.params.length > 0 &&
-		     this.tail.length > 0))
+		if (this.command && this.params && this.tail)
 			this.valid = true;
 
 		if (this.fromUser && this.command === 'PRIVMSG') {

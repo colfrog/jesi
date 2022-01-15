@@ -9,7 +9,8 @@
   "private": false,
   "dependencies": {
     "regenerator-runtime": "^0.13.3",
-    "sqlite3": "^4.2.0"
+    "sqlite3": "^4.2.0",
+    "ws": "^8.4.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",

@@ -183,7 +183,7 @@ export default class ServerInfo {
 	_changeModes(nick, channel, changes) {
 		var modes;
 		// Some other user in a channel
-		if (this.users[nick] && typeof this.users[nick].channels[channel] === 'string')
+		if (this.users[nick] && this.users[nick].channels[channel])
 			modes = this.users[nick].channels[channel].split('');
 		// Us
 		else if (nick === channel)
@@ -264,7 +264,7 @@ export default class ServerInfo {
 	// TODO: This needs to be less messy.
 
 	_onJoin(client, msgData) {
-		let chan = msgData.tail;
+		let chan = msgData.params[0];
 		let nick = msgData.nick;
 
 		if (nick === this.user.nick) {
@@ -413,8 +413,9 @@ export default class ServerInfo {
 		let chan = msgData.params[msgData.params.length - 2];
 		let topic = msgData.tail;
 
-		if (!(this.channels[chan] instanceof ChannelInfo))
+		if (!(this.channels[chan] instanceof ChannelInfo)) {
 			this.channels[chan] = new ChannelInfo(chan);
+                }
 
 		this.channels[chan].topic = topic;
 	}
