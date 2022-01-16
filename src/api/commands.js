@@ -13,6 +13,10 @@ function api_commands_join(J, s, msg) {
         J.clients[msg.server_name].writer.joinChannels([msg.channel]);
 }
 
+function api_commands_part(J, s, msg) {
+        J.clients[msg.server_name].writer.partFrom(msg.channel, msg.data);
+}
+
 function api_commands_channels(J, s, msg) {
         s.send(`CHANNELS '${msg.server_name}' | ${Object.keys(J.clients[msg.server_name].info.channels).join(' ')}`);
 }
@@ -24,6 +28,7 @@ function api_commands_users(J, s, msg) {
 export const APICommands = {
         'SEND': api_commands_send,
         'JOIN': api_commands_join,
+        'PART': api_commands_part,
         'CHANNELS': api_commands_channels,
         'USERS': api_commands_users,
 };

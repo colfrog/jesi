@@ -28,7 +28,11 @@ export default class APIWebsocketServer {
                         });
 
                         J.on('JOIN', (server, msgData) => {
-                                APIDispatch['JOIN'](this.socket, server.info, msgData.tail);
+                                APIDispatch['JOIN'](this.socket, server.info, msgData);
+                        });
+
+                        J.on('PART', (server, msgData) => {
+                                APIDispatch['PART'](this.socket, server.info, msgData);
                         });
                 });
         }
