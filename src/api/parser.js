@@ -17,7 +17,7 @@ export default class APIParser {
                 if (m)
                         return {
                                 'command': m[1],
-                                'server_name': m[2],
+                                'server': m[2],
                                 'channel': m[3],
                                 'user': m[4],
                                 'data': m[5]
