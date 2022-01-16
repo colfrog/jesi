@@ -24,9 +24,13 @@ function api_dispatch_recv(s, server, msgData) {
                 s.send(`RECV '${server.name}'.${msgData.replyTarget}.${msgData.nick} | ${msgData.tail}\r\n`);
 }
 
+function api_dispatch_nick(s, server, msgData) {
+}
+
 export const APIDispatch = {
         'CONNECT': api_dispatch_connect,
         'JOIN': api_dispatch_join,
         'PART': api_dispatch_part,
         'RECV': api_dispatch_recv,
+        'NICK': api_dispatch_nick,
 };

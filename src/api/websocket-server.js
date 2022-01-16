@@ -12,6 +12,10 @@ export default class APIWebsocketServer {
 
                 this.server.on('connection', (ws) => {
                         this.socket = ws; // TODO: more sockets
+                        Object.keys(jesi.clients).forEach(server => {
+                                ws.send(`NICK ${server}.${jesi.clients[server].info.user.name}`);
+                        });
+
                         ws.on('message', (data) => {
                                 this.parser.run(data.toString());
                         });
