@@ -110,8 +110,7 @@ export default class Module {
 
 		// TODO: Handle code errors gracefully
 		// TODO: Find a better way of passing msgData, this is evil
-		return vm.runInContext(code + '(' + JSON.stringify(msgData) + ')',
-			this.context, this._contextOptions);
+		vm.runInContext(code + '(' + JSON.stringify(msgData) + ')', this.context, this._contextOptions);
 	}
 
 	async init() {

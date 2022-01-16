@@ -1,15 +1,14 @@
 import {APICommands} from './commands';
 
 export default class APIParser {
-        constructor(J, serv) {
+        constructor(J) {
                 this.jesi = J;
-                this.server = serv;
         }
 
-        run(text) {
+        run(s, text) {
                 let msg = this.parse(text);
                 if (msg && msg.command && APICommands[msg.command])
-                        APICommands[msg.command](this.jesi, this.server.socket, msg);
+                        APICommands[msg.command](this.jesi, s, msg);
         }
 
         parse(text) {

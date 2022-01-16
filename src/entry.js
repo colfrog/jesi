@@ -16,8 +16,8 @@ const config = new Config(),
 
 servers.forEach(async servInfo => {
 	const server = jesi.addServer(servInfo);
-	const modsHandler = new ModulesHandler(server, commandPrefix, modules);
-	await modsHandler.initModules();
+	server.modules = new ModulesHandler(server, commandPrefix, modules);
+	await server.modules.initModules();
 
 	server.connect();
 });

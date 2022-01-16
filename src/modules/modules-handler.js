@@ -50,8 +50,8 @@ export default class ModulesHandler {
 	}
 
 	toModules(server, msgData) {
-		let hooks = server.hooks;
-		Object.values(this.modules).forEach((module) => {
+		let hooks = this.server.hooks;
+		Object.values(this.modules).forEach(module => {
 			module.handleMessage(msgData);
 		});
 	}

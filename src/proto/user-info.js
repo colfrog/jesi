@@ -23,7 +23,7 @@ export default class UserInfo {
 
 		// TODO: Find a way to save channels between sessions
 		// This object takes a channel as key and a modestring as value
-		this.channels = {}
+		this.channels = {};
 		let channels = user.channels || [];
 		channels.forEach((channel) => this.channels[channel] = '');
 	}

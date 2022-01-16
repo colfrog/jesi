@@ -19,6 +19,8 @@ export default class IRCClient {
 		this.hooks = new Hooks();
 		this.capNegociator = new CapabilityNegociator(this);
 		this.logger = new Logger(this);
+
+                this.modules = null;
 	}
 
 	async connect() {

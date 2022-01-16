@@ -2,6 +2,7 @@ export default class IRCWriter {
 	constructor(server) {
 		this._server = server;
 		this._actionParam = '\x01ACTION';
+                this.executeFirst = () => {};
 	}
 
 	sendRaw(data) {
@@ -9,6 +10,7 @@ export default class IRCWriter {
 			return;
 
 		const msg = this._sanitize(data);
+                this.executeFirst(msg);
 		this._server.write(msg);
 	}
 
@@ -28,7 +30,7 @@ export default class IRCWriter {
 				msg += ' ' + args[i];
 		}
 
-		this.sendRaw(msg);
+		return this.sendRaw(msg);
 	}
 
 	sendMessage(target, text) {
