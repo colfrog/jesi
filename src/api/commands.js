@@ -43,6 +43,28 @@ function api_commands_users(J, s, msg) {
         s.send(`USERS '${msg.server}'.${msg.channel} | ${Object.keys(J.clients[msg.server].info.channels[msg.channel].users).join(' ')}`);
 }
 
+function api_commands_loadmod(J, s, msg) {
+        let modHandler = J.clients[msg.server].modules;
+        if (modHandler)
+                modHandler.addModule(msg.data);
+}
+
+function api_commands_reloadmod(J, s, msg) {
+        let modHandler = J.clients[msg.server].modules;
+        if (modHandler) {
+                if (msg.tail === 'all')
+                        modHandler.refreshAll();
+                else
+                        modHandler.refresh(msg.data);
+        }
+}
+
+function api_commands_unloadmod(J, s, msg) {
+        let modHandler = J.clients[msg.server].modules;
+        if (modHandler)
+                modHandler.delModule(msg.data);
+}
+
 export const APICommands = {
         'SEND': api_commands_send,
         'TOJESI': api_commands_tojesi,
@@ -50,4 +72,7 @@ export const APICommands = {
         'PART': api_commands_part,
         'CHANNELS': api_commands_channels,
         'USERS': api_commands_users,
+        'LOADMOD': api_commands_loadmod,
+        'RELOADMOD': api_commands_reloadmod,
+        'UNLOADMOD': api_commands_unloadmod,
 };

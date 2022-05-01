@@ -11,7 +11,9 @@ export default class ModulesHandler {
 		if (!modules || typeof modules !== 'object' || !modules.forEach)
 			return;
 
-		this.moduleList = coreModules.concat(modules);
+		this.moduleList = modules;
+                for (let i = 0; i < coreModules.length; i++)
+                        this.addModule(coreModules[i], 'bin/core-modules');
 
 		server.hooks.add('*', this.toModules.bind(this));
 		server.hooks.addPreInit(this.runPreInit.bind(this));
@@ -24,10 +26,11 @@ export default class ModulesHandler {
 			await this.addModule(this.moduleList[i]);
 	}
 
-	async addModule(modulePath) {
-		let module = new Module(this, modulePath);
+	async addModule(name, prefix) {
+                if (!prefix)
+                        prefix = 'modules';
+		let module = new Module(this, `${prefix}/${name}.js`);
 		await module.init();
-		let name = module.name;
 
 		if (this.modules[name])
 			throw 'Module ' + name + ' was defined twice.';

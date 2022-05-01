@@ -1,8 +1,8 @@
 [
-	"./bin/core-modules/core.js",
-	"./bin/core-modules/sasl.js",
-	"./bin/core-modules/nickserv.js",
-	"./bin/core-modules/channel.js",
-	"./bin/core-modules/module-manager.js",
-	"./bin/core-modules/temporary-commands.js"
+	"core",
+	"sasl",
+	"nickserv",
+	"channel",
+	"module-manager",
+	"temporary-commands"
 ]

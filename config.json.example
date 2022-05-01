@@ -23,14 +23,14 @@
 		}
 	],
 	"modules": [
-		"./modules/pingpong.js",
-		"./modules/modes.js",
-		"./modules/cheer.js",
-		"./modules/intensify.js",
-		"./modules/looks.js",
-		"./modules/decision.js",
-		"./modules/replace.js",
-		"./modules/mock.js",
-		"./modules/8ball.js"
+		"pingpong",
+		"modes",
+		"cheer",
+		"intensify",
+		"looks",
+		"decision",
+		"replace",
+		"mock",
+		"8ball"
 	]
 }

@@ -8,7 +8,7 @@ var jModule = {
 
 function doLoad(msgData) {
 	let target = msgData.nick;
-	if (msgData.host !== serverInfo.ownerHost)
+	if (msgData.host !== serverInfo.ownerHost && msgData.nick !== 'jesi')
 		return ircWriter.sendMessage(target, 'no.');
 
 	let path = msgData.tailWords.slice(1).join(' ');
@@ -18,7 +18,7 @@ function doLoad(msgData) {
 
 function doReload(msgData) {
 	let target = msgData.nick;
-	if (msgData.host !== serverInfo.ownerHost)
+	if (msgData.host !== serverInfo.ownerHost && msgData.nick !== 'jesi')
 		return ircWriter.sendMessage(target, 'no.');
 
 	let module = msgData.tailWords.slice(1).join(' ');
@@ -33,7 +33,7 @@ function doReload(msgData) {
 
 function doUnload(msgData) {
 	let target = msgData.nick;
-	if (msgData.host !== serverInfo.ownerHost)
+	if (msgData.host !== serverInfo.ownerHost && msgData.nick !== 'jesi')
 		return ircWriter.sendMessage(target, 'no.');
 
 	let module = msgData.tailWords.slice(1).join(' ');
